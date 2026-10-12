@@ -1,0 +1,1938 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Sổ Marketing — chiến dịch, nội dung, leads và sổ thu chi</title>
+<meta name="description" content="Theo dõi chiến dịch marketing, lịch nội dung, leads, sổ thu chi, VAT và báo cáo lãi lỗ trong một trang.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='10' fill='%232346A0'/%3E%3Cpath d='M16 20h32M16 32h32M16 44h20' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3Ccircle cx='46' cy='44' r='7' fill='none' stroke='%23F28A99' stroke-width='4'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --paper: #F4F6F3;
+    --sheet: #FFFFFF;
+    --ink: #1F2A44;
+    --ink-soft: #5A6377;
+    --blue: #2346A0;
+    --blue-hover: #1A3681;
+    --blue-wash: #E7ECF8;
+    --red: #C8102E;
+    --red-wash: #FBE8EB;
+    --amber: #9A5B00;
+    --amber-wash: #FBF0DC;
+    --rule: #D8DDE6;
+    --rule-strong: #A9B1C0;
+    --margin: #E9A3AB;
+    --focus: #2346A0;
+    --font: "Be Vietnam Pro", "Segoe UI", system-ui, -apple-system, "Helvetica Neue", Arial, sans-serif;
+    color-scheme: light;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font: 400 15px/1.55 var(--font);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+a { color: var(--blue); text-underline-offset: 2px; }
+a:hover { color: var(--blue-hover); }
+h1, h2, h3 { line-height: 1.25; margin: 0; font-weight: 600; }
+h1 { font-size: 1.75rem; letter-spacing: -0.01em; }
+h2 { font-size: 1.15rem; margin: 36px 0 12px; }
+p { margin: 0 0 12px; }
+.num, td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.muted { color: var(--ink-soft); }
+.small { font-size: 0.86rem; }
+.pos { color: var(--blue); }
+.neg { color: var(--red); }
+:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); border: 0; }
+
+/* ---------- Header and navigation ---------- */
+.top {
+    background: var(--sheet);
+    border-bottom: 1px solid var(--rule);
+    padding-top: env(safe-area-inset-top, 0px);
+    position: sticky; top: 0; z-index: 10;
+}
+.top-inner { max-width: 1240px; margin: 0 auto; padding: 0 20px; display: flex; align-items: stretch; gap: 28px; }
+.brand { display: flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; white-space: nowrap; color: var(--ink); text-decoration: none; padding: 14px 0; }
+.brand svg { flex: none; }
+.nav { display: flex; gap: 16px; overflow-x: auto; scrollbar-width: none; flex: 1; }
+.nav::-webkit-scrollbar { display: none; }
+.nav-group { display: flex; align-items: stretch; gap: 2px; }
+.nav-group + .nav-group { padding-left: 16px; border-left: 1px solid var(--rule); margin: 10px 0; }
+.nav-group + .nav-group a { margin-top: -10px; margin-bottom: -10px; }
+.nav-label { align-self: center; font-size: 0.78rem; color: var(--ink-soft); margin-right: 8px; white-space: nowrap; }
+.nav a {
+    display: flex; align-items: center; padding: 0 9px; white-space: nowrap;
+    color: var(--ink-soft); text-decoration: none; border-bottom: 3px solid transparent; border-top: 3px solid transparent;
+}
+.nav a:hover { color: var(--ink); }
+.nav a[aria-current="page"] { color: var(--ink); font-weight: 600; border-bottom-color: var(--blue); }
+
+/* ---------- Page ---------- */
+main:focus { outline: none; }
+main { max-width: 1240px; margin: 0 auto; padding: 28px 20px 64px; }
+.page-head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.page-head p { margin: 6px 0 0; color: var(--ink-soft); max-width: 70ch; }
+.page-actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.notice { background: var(--amber-wash); color: var(--amber); padding: 10px 14px; border-radius: 6px; margin-bottom: 16px; }
+.notice.is-red { background: var(--red-wash); color: var(--red); }
+
+/* ---------- Controls ---------- */
+.btn {
+    display: inline-flex; align-items: center; gap: 6px; justify-content: center;
+    font: 500 0.92rem/1 var(--font); padding: 10px 14px; min-height: 40px;
+    border: 1px solid var(--rule-strong); border-radius: 6px; background: var(--sheet); color: var(--ink);
+    cursor: pointer; text-decoration: none; white-space: nowrap;
+}
+.btn:hover { border-color: var(--ink-soft); color: var(--ink); }
+.btn-primary { background: var(--blue); border-color: var(--blue); color: #fff; }
+.btn-primary:hover { background: var(--blue-hover); border-color: var(--blue-hover); color: #fff; }
+.btn-link { border: 0; background: none; padding: 4px 2px; min-height: 0; color: var(--blue); font-weight: 500; }
+.btn-link:hover { text-decoration: underline; color: var(--blue-hover); }
+.btn-link.is-danger { color: var(--red); }
+.btn svg { flex: none; }
+
+label, .label { display: block; font-size: 0.84rem; color: var(--ink-soft); margin-bottom: 4px; }
+input[type=text], input[type=date], input[type=month], input[type=email], input[type=tel], input[type=url], input[type=search], select, textarea {
+    font: 400 0.95rem/1.3 var(--font); color: var(--ink);
+    width: 100%; padding: 9px 10px; min-height: 40px;
+    border: 1px solid var(--rule-strong); border-radius: 6px; background: var(--sheet);
+}
+textarea { min-height: 70px; resize: vertical; }
+input:focus, select:focus, textarea:focus { outline: 2px solid var(--focus); outline-offset: 0; border-color: var(--focus); }
+.check { display: flex; align-items: center; gap: 8px; color: var(--ink); font-size: 0.95rem; margin: 0; cursor: pointer; }
+.check input { width: 18px; height: 18px; accent-color: var(--blue); }
+
+.toolbar { display: flex; flex-wrap: wrap; align-items: flex-end; gap: 12px 14px; margin-bottom: 18px; }
+.toolbar > div { flex: 0 1 190px; min-width: 130px; }
+.toolbar > .grow { flex: 1 1 240px; }
+.chips { display: flex; flex-wrap: wrap; gap: 6px; margin: -6px 0 18px; }
+.chip { font: 500 0.85rem/1 var(--font); padding: 7px 11px; border-radius: 999px; border: 1px solid var(--rule); background: var(--sheet); color: var(--ink-soft); cursor: pointer; }
+.chip[aria-pressed="true"] { background: var(--blue-wash); border-color: var(--blue); color: var(--blue); }
+
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 14px 16px; }
+.grid .wide { grid-column: 1 / -1; }
+.radio-row { display: flex; gap: 18px; padding-top: 8px; }
+
+/* ---------- Ledger-style tables ---------- */
+.scroll { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+table.book { width: 100%; border-collapse: collapse; background: var(--sheet); font-size: 0.93rem; }
+table.book th {
+    text-align: left; font-weight: 600; font-size: 0.82rem; color: var(--ink-soft);
+    padding: 10px 12px; border-bottom: 1px solid var(--rule-strong); white-space: nowrap; background: var(--sheet);
+}
+table.book th.num { text-align: right; }
+table.book td { padding: 9px 12px; border-bottom: 1px solid var(--rule); vertical-align: top; }
+table.book tbody tr:hover td { background: #FAFBFD; }
+/* the red margin rule of a paper ledger */
+table.book.ruled { box-shadow: inset 3px 0 0 var(--sheet), inset 4px 0 0 var(--margin), inset 6px 0 0 var(--sheet), inset 7px 0 0 var(--margin); }
+table.book.ruled td:first-child, table.book.ruled th:first-child { padding-left: 20px; }
+/* accounting totals: single rule above, double rule below */
+table.book tfoot td { font-weight: 600; border-top: 1px solid var(--ink); border-bottom: 3px double var(--ink); padding-top: 10px; }
+table.book .sub { display: block; font-size: 0.82rem; color: var(--ink-soft); margin-top: 2px; }
+table.book .sub.neg { color: var(--red); }
+table.book.wide-first td:first-child { min-width: 220px; }
+table.book .actions { white-space: nowrap; text-align: right; }
+table.book tr.group-start td { border-top: 1px solid var(--rule-strong); }
+table.book td.indent { padding-left: 36px; }
+
+/* ---------- Tally: label .......... value ---------- */
+.tally { margin: 0; padding: 0; max-width: 560px; }
+.tally div { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 8px; padding: 7px 0; }
+.tally dt { color: var(--ink-soft); }
+.tally dd { margin: 0; font-weight: 600; font-variant-numeric: tabular-nums; text-align: right; }
+.tally div::after { content: none; }
+.tally .lead { flex: 1; border-bottom: 1px dotted var(--rule-strong); transform: translateY(-4px); min-width: 20px; }
+.tally .note { flex-basis: 100%; text-align: right; font-size: 0.82rem; color: var(--ink-soft); margin-top: 2px; }
+.tally div.total { border-top: 1px solid var(--ink); margin-top: 4px; padding-top: 9px; }
+.tally div.total dd { border-bottom: 3px double var(--ink); padding-bottom: 2px; }
+.tallies { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 8px 48px; }
+
+/* ---------- Dashboard statement ---------- */
+.statement { font-size: clamp(1.25rem, 2.6vw, 1.75rem); line-height: 1.45; font-weight: 500; max-width: 34em; margin: 4px 0 28px; letter-spacing: -0.01em; }
+.statement b { font-weight: 700; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.statement .roas { color: var(--blue); }
+.statement .roas.is-low { color: var(--red); }
+.split { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 0 48px; }
+
+/* ---------- Tags and bars ---------- */
+.tag { display: inline-block; font-size: 0.8rem; line-height: 1.3; padding: 2px 7px; border-radius: 3px; border: 1px solid var(--rule); color: var(--ink-soft); background: var(--sheet); white-space: nowrap; }
+.tag.is-running, .tag.is-published, .tag.is-won { border-color: var(--blue); color: var(--blue); background: var(--blue-wash); }
+.tag.is-paused, .tag.is-review, .tag.is-proposal { border-color: #E3C48F; color: var(--amber); background: var(--amber-wash); }
+.tag.is-lost { border-color: #EBB0B8; color: var(--red); background: var(--red-wash); }
+.tag.is-scheduled, .tag.is-qualified { border-color: var(--rule-strong); color: var(--ink); }
+.bar { height: 4px; background: var(--rule); margin-top: 6px; min-width: 80px; }
+.bar span { display: block; height: 100%; background: var(--blue); }
+.bar.is-over span { background: var(--red); }
+
+/* ---------- Charts ---------- */
+.chart { width: 100%; height: auto; display: block; margin: 4px 0 8px; }
+.chart text { font-family: var(--font); fill: var(--ink-soft); font-size: 12px; }
+.chart.is-compact text { font-size: 13px; }
+.legend { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.85rem; color: var(--ink-soft); margin-bottom: 6px; }
+.legend i { display: inline-block; width: 12px; height: 12px; margin-right: 6px; vertical-align: -1px; }
+
+/* ---------- Content agenda ---------- */
+.month-nav { display: flex; align-items: center; gap: 10px; }
+.month-nav h2 { margin: 0 6px; min-width: 9em; }
+.agenda { border-top: 1px solid var(--rule-strong); background: var(--sheet); }
+.day { display: grid; grid-template-columns: 120px 1fr; gap: 14px; padding: 12px 14px; border-bottom: 1px solid var(--rule); }
+.day.is-today { box-shadow: inset 4px 0 0 var(--blue); }
+.day .when { color: var(--ink-soft); font-size: 0.88rem; }
+.day .when b { display: block; color: var(--ink); font-size: 1rem; }
+.entry { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; padding: 4px 0; }
+.entry + .entry { border-top: 1px dashed var(--rule); }
+.entry .title { font-weight: 600; }
+.entry select { width: auto; min-height: 32px; padding: 4px 8px; font-size: 0.86rem; }
+
+/* ---------- Lead board ---------- */
+.board { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(240px, 1fr); gap: 12px; overflow-x: auto; padding-bottom: 10px; }
+.col { background: #EBEEF2; border-radius: 8px; padding: 10px; min-height: 140px; }
+.col h3 { font-size: 0.95rem; display: flex; justify-content: space-between; align-items: center; margin: 2px 2px 10px; }
+.card { background: var(--sheet); border: 1px solid var(--rule); border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; }
+.card p { margin: 2px 0; font-size: 0.9rem; }
+.card .row { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 8px; }
+.card select { width: auto; max-width: 140px; min-height: 32px; padding: 4px 8px; font-size: 0.85rem; }
+
+/* ---------- Calculators ---------- */
+.calcs { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+.calc { background: var(--sheet); border: 1px solid var(--rule); border-radius: 8px; padding: 18px 18px 8px; }
+.calc h2 { margin: 0 0 4px; }
+.calc > p { color: var(--ink-soft); font-size: 0.9rem; }
+.calc .grid { grid-template-columns: 1fr 1fr; }
+.calc .tally { margin-top: 14px; }
+
+/* ---------- Stamp: the one loud element ---------- */
+.stamp {
+    display: inline-flex; flex-direction: column; align-items: center; justify-content: center;
+    border: 3px solid currentColor; border-radius: 6px; padding: 6px 16px 5px;
+    color: var(--red); transform: rotate(-6deg); font-weight: 700; letter-spacing: 0.08em;
+    box-shadow: inset 0 0 0 2px var(--sheet), inset 0 0 0 3px currentColor;
+    background: color-mix(in srgb, var(--red) 4%, transparent);
+    mix-blend-mode: multiply; opacity: 0.92; user-select: none;
+}
+.stamp b { font-size: 1.25rem; line-height: 1.1; }
+.stamp small { font-size: 0.78rem; letter-spacing: 0.02em; font-weight: 600; }
+.stamp.is-off { color: var(--ink-soft); }
+.stamp-wrap { display: flex; align-items: center; gap: 28px; flex-wrap: wrap; margin-bottom: 8px; }
+@media (prefers-reduced-motion: no-preference) {
+    .stamp.land { animation: stamp-land 420ms cubic-bezier(.2, .9, .3, 1.4) both; }
+    @keyframes stamp-land {
+        0% { transform: rotate(-14deg) scale(1.9); opacity: 0; }
+        60% { opacity: 0.95; }
+        100% { transform: rotate(-6deg) scale(1); opacity: 0.92; }
+    }
+}
+
+/* ---------- Dialog ---------- */
+dialog {
+    border: 0; border-radius: 10px; padding: 0; width: min(760px, calc(100vw - 24px));
+    max-height: calc(100dvh - 32px); color: var(--ink); background: var(--sheet);
+    box-shadow: 0 20px 60px rgba(31, 42, 68, 0.25);
+}
+dialog::backdrop { background: rgba(31, 42, 68, 0.45); }
+.dlg-head { display: flex; justify-content: space-between; align-items: center; padding: 16px 20px; border-bottom: 1px solid var(--rule); position: sticky; top: 0; background: var(--sheet); z-index: 1; }
+.dlg-head h2 { margin: 0; }
+.dlg-body { padding: 18px 20px; }
+.dlg-foot { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; padding: 14px 20px 18px; border-top: 1px solid var(--rule); }
+.dlg-foot .spacer { flex: 1; }
+.errors { background: var(--red-wash); color: var(--red); padding: 10px 14px; border-radius: 6px; margin-bottom: 14px; }
+.errors:empty { display: none; }
+.preview { margin: 14px 0 0; padding: 10px 12px; background: var(--blue-wash); border-radius: 6px; font-variant-numeric: tabular-nums; }
+.preview:empty { display: none; }
+.hint { color: var(--ink-soft); font-size: 0.86rem; margin: 10px 0 0; max-width: 72ch; }
+
+.toast {
+    position: fixed; left: 50%; bottom: calc(20px + env(safe-area-inset-bottom, 0px)); transform: translateX(-50%);
+    background: var(--ink); color: #fff; padding: 10px 16px; border-radius: 6px; font-size: 0.92rem; z-index: 100;
+    max-width: calc(100vw - 32px);
+}
+.toast[hidden] { display: none; }
+
+.empty { background: var(--sheet); border: 1px dashed var(--rule-strong); border-radius: 8px; padding: 28px; max-width: 640px; }
+.empty h2 { margin: 0 0 8px; }
+.empty .page-actions { margin-top: 16px; }
+
+footer.foot { max-width: 1240px; margin: 0 auto; padding: 0 20px 32px; color: var(--ink-soft); font-size: 0.84rem; }
+
+@media (max-width: 1360px) {
+    .nav-label { display: none; }
+}
+@media (max-width: 720px) {
+    .top-inner { flex-direction: column; gap: 0; padding: 0 14px; }
+    .brand { padding: 10px 0 4px; }
+    .nav { gap: 14px; -webkit-mask-image: linear-gradient(to right, #000 85%, transparent); mask-image: linear-gradient(to right, #000 85%, transparent); }
+    .nav-group + .nav-group { padding-left: 14px; margin: 0; border-left: 1px solid var(--rule); }
+    .nav-group + .nav-group a { margin: 0; }
+    .nav a { padding: 10px 8px 9px; }
+    .nav-label { display: none; }
+    main { padding: 20px 14px 56px; }
+    .toolbar { display: grid; grid-template-columns: 1fr 1fr; }
+    .toolbar > div, .toolbar > .grow { min-width: 0; }
+    .toolbar > .grow, .toolbar > .month-nav { grid-column: 1 / -1; }
+    .page-head .page-actions { width: 100%; }
+    h1 { font-size: 1.45rem; }
+    .day { grid-template-columns: 1fr; gap: 4px; }
+    .calc .grid { grid-template-columns: 1fr; }
+    .dlg-body .grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 420px) {
+    .dlg-body .grid { grid-template-columns: 1fr; }
+}
+@media print {
+    .top, .page-actions, .toolbar, .chips, .actions, .btn, footer.foot { display: none !important; }
+    body { background: #fff; }
+    main { padding: 0; }
+}
+</style>
+</head>
+<body>
+<header class="top">
+    <div class="top-inner">
+        <a class="brand" href="#dashboard">
+            <svg width="26" height="26" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="10" fill="#2346A0"/><path d="M16 20h32M16 32h32M16 44h20" stroke="#fff" stroke-width="5" stroke-linecap="round"/><circle cx="46" cy="44" r="7" fill="none" stroke="#F28A99" stroke-width="4"/></svg>
+            Sổ Marketing
+        </a>
+        <nav class="nav" id="nav" aria-label="Các trang"></nav>
+    </div>
+</header>
+
+<main id="app" tabindex="-1"></main>
+
+<footer class="foot" id="foot"></footer>
+
+<dialog id="dlg" aria-labelledby="dlg-title">
+    <form id="dlg-form" novalidate>
+        <div class="dlg-head">
+            <h2 id="dlg-title"></h2>
+            <button type="button" class="btn-link btn" data-act="close-dialog" aria-label="Đóng">
+                <svg width="18" height="18" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+            </button>
+        </div>
+        <div class="dlg-body">
+            <div class="errors" id="dlg-errors" role="alert"></div>
+            <div id="dlg-fields"></div>
+        </div>
+        <div class="dlg-foot" id="dlg-foot"></div>
+    </form>
+</dialog>
+
+<div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+<input type="file" id="restore-file" accept="application/json,.json" hidden>
+
+<script>
+'use strict';
+
+/* =========================================================================
+   Sổ Marketing — một trang HTML, dữ liệu lưu trong trình duyệt (localStorage).
+   ========================================================================= */
+
+const STORE_KEY = 'so-marketing.v1';
+
+const OPT = {
+    channel: { facebook: 'Facebook', google: 'Google Ads', tiktok: 'TikTok', zalo: 'Zalo', youtube: 'YouTube', instagram: 'Instagram',
+        email: 'Email', seo: 'SEO', website: 'Website', kol: 'KOL/KOC', event: 'Sự kiện', offline: 'Offline', other: 'Khác' },
+    objective: { awareness: 'Nhận diện', traffic: 'Lượt truy cập', leads: 'Thu lead', sales: 'Bán hàng', retention: 'Giữ chân khách' },
+    campaign_status: { planned: 'Kế hoạch', running: 'Đang chạy', paused: 'Tạm dừng', done: 'Đã kết thúc' },
+    format: { post: 'Bài viết', reel: 'Reels', video: 'Video', story: 'Story', blog: 'Blog', email: 'Email', livestream: 'Livestream', ad: 'Quảng cáo', other: 'Khác' },
+    content_status: { idea: 'Ý tưởng', drafting: 'Đang viết', review: 'Chờ duyệt', scheduled: 'Đã lên lịch', published: 'Đã đăng' },
+    stage: { new: 'Mới', contacted: 'Đã liên hệ', qualified: 'Tiềm năng', proposal: 'Đã báo giá', won: 'Chốt được', lost: 'Mất' },
+    method: { cash: 'Tiền mặt', bank: 'Ngân hàng' },
+    type: { income: 'Thu', expense: 'Chi' },
+};
+const VAT_RATES = [0, 5, 8, 10];
+const OPEN_STAGES = ['new', 'contacted', 'qualified', 'proposal'];
+
+const ACCOUNT_DEFAULTS = { cash: '111', bank: '112', vat_in: '1331', vat_out: '33311', income_default: '5111', expense_default: '6428' };
+const ACCOUNT_LABELS = {
+    cash: 'TK tiền mặt', bank: 'TK tiền gửi ngân hàng', vat_in: 'TK VAT đầu vào', vat_out: 'TK VAT đầu ra',
+    income_default: 'TK doanh thu mặc định', expense_default: 'TK chi phí mặc định',
+};
+const DEFAULT_CATEGORIES = [
+    ['Doanh thu bán hàng', 'income', '5111', false],
+    ['Doanh thu dịch vụ', 'income', '5113', false],
+    ['Doanh thu hoạt động tài chính', 'income', '515', false],
+    ['Thu nhập khác', 'income', '711', false],
+    ['Quảng cáo online (Facebook, Google, TikTok...)', 'expense', '6417', true],
+    ['KOL/KOC, PR, báo chí', 'expense', '6417', true],
+    ['Sự kiện, in ấn, POSM', 'expense', '6418', true],
+    ['Phần mềm, công cụ marketing', 'expense', '6417', true],
+    ['Giá vốn hàng bán', 'expense', '632', false],
+    ['Lương, thưởng, bảo hiểm', 'expense', '6421', false],
+    ['Thuê văn phòng', 'expense', '6427', false],
+    ['Điện, nước, internet', 'expense', '6427', false],
+    ['Vận chuyển, giao hàng', 'expense', '6417', false],
+    ['Thuế, phí, lệ phí', 'expense', '6425', false],
+    ['Chi phí khác', 'expense', '811', false],
+];
+
+const PAGES = [
+    { id: 'dashboard', label: 'Tổng quan', group: 'Marketing' },
+    { id: 'campaigns', label: 'Chiến dịch', group: 'Marketing' },
+    { id: 'content', label: 'Lịch nội dung', group: 'Marketing' },
+    { id: 'leads', label: 'Leads', group: 'Marketing' },
+    { id: 'tools', label: 'Công cụ tính', group: 'Marketing' },
+    { id: 'ledger', label: 'Sổ thu chi', group: 'Sổ sách' },
+    { id: 'reports', label: 'Báo cáo', group: 'Sổ sách' },
+    { id: 'journal', label: 'Nhật ký chung', group: 'Sổ sách' },
+    { id: 'setup', label: 'Thiết lập', group: 'Sổ sách' },
+];
+
+/* ---------------------------------------------------------------- helpers */
+
+const $ = (sel, root = document) => root.querySelector(sel);
+const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+const pad = n => String(n).padStart(2, '0');
+const ymd = d => d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+const today = () => ymd(new Date());
+const thisYear = () => new Date().getFullYear();
+const monthEnd = (y, m) => y + '-' + pad(m) + '-' + pad(new Date(y, m, 0).getDate());
+const addDays = (s, n) => { const [y, m, d] = s.split('-').map(Number); return ymd(new Date(y, m - 1, d + n)); };
+const label = (group, key) => (OPT[group] && OPT[group][key]) || (key ? key : '—');
+
+function h(value) {
+    return String(value == null ? '' : value)
+        .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
+/** Same rules as the server version: 1500000, 1.500.000, 1,500,000, 1.500.000,5 and 12,5 all work. */
+function parseNum(raw) {
+    if (typeof raw === 'number') { return isFinite(raw) ? raw : 0; }
+    let s = String(raw == null ? '' : raw).replace(/[^\d,.\-]/g, '');
+    if (s === '' || s === '-') { return 0; }
+    const hasComma = s.includes(','), hasDot = s.includes('.');
+    if (hasComma && hasDot) {
+        s = s.lastIndexOf(',') > s.lastIndexOf('.') ? s.replace(/\./g, '').replace(',', '.') : s.replace(/,/g, '');
+    } else if (hasComma) {
+        s = /,\d{3}(,|$)/.test(s) ? s.replace(/,/g, '') : s.replace(',', '.');
+    } else if (hasDot && /^-?\d{1,3}(\.\d{3})+$/.test(s)) {
+        s = s.replace(/\./g, '');
+    }
+    const n = parseFloat(s);
+    return isFinite(n) ? n : 0;
+}
+
+function parseDate(raw) {
+    const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(raw || '').trim());
+    if (!m) { return null; }
+    const d = new Date(+m[1], +m[2] - 1, +m[3]);
+    return d.getFullYear() === +m[1] && d.getMonth() === +m[2] - 1 && d.getDate() === +m[3] ? m[0] : null;
+}
+
+const round2 = v => Math.round((v + Number.EPSILON) * 100) / 100;
+const clip = (v, max = 255) => String(v == null ? '' : v).trim().slice(0, max);
+const oneOf = (group, v, fallback) => (OPT[group] && Object.prototype.hasOwnProperty.call(OPT[group], v)) ? v : fallback;
+
+const fmt = {
+    num(v, d = 0) {
+        if (v == null || !isFinite(v)) { return '—'; }
+        const fixed = Math.abs(v).toFixed(d);
+        const [i, f] = fixed.split('.');
+        const neg = v < 0 && Number(fixed) !== 0;
+        return (neg ? '-' : '') + i.replace(/\B(?=(\d{3})+(?!\d))/g, '.') + (f ? ',' + f : '');
+    },
+    money(v) { return v == null || !isFinite(v) ? '—' : fmt.num(v, 0) + ' ₫'; },
+    pct(r, d = 1) { return r == null || !isFinite(r) ? '—' : fmt.num(r * 100, d) + '%'; },
+    times(v) { return v == null || !isFinite(v) ? '—' : fmt.num(v, 2) + 'x'; },
+    short(v) {
+        const a = Math.abs(v);
+        if (a >= 1e9) { return fmt.num(v / 1e9, a >= 1e10 ? 0 : 1) + ' tỷ'; }
+        if (a >= 1e6) { return fmt.num(v / 1e6, a >= 1e7 ? 0 : 1) + ' tr'; }
+        if (a >= 1e3) { return fmt.num(v / 1e3, 0) + ' N'; }
+        return fmt.num(v, 0);
+    },
+    date(s) { if (!s) { return '—'; } const [y, m, d] = s.split('-'); return d + '/' + m + '/' + y; },
+    input(v) {
+        if (v == null || v === '') { return ''; }
+        const n = Number(v);
+        return fmt.num(n, n % 1 === 0 ? 0 : 2);
+    },
+};
+
+/* ---------------------------------------------------------------- calculations (mirror of the plugin's PHP) */
+
+const M = {
+    div(a, b) { return Math.abs(b) < 1e-9 ? null : a / b; },
+
+    metrics(c) {
+        const n = k => Number(c[k]) || 0;
+        const spend = n('spend'), revenue = n('revenue');
+        const cpm = M.div(spend, n('impressions'));
+        return {
+            ctr: M.div(n('clicks'), n('impressions')),
+            cpc: M.div(spend, n('clicks')),
+            cpm: cpm == null ? null : cpm * 1000,
+            cpl: M.div(spend, n('leads')),
+            cpa: M.div(spend, n('conversions')),
+            lead_rate: M.div(n('leads'), n('clicks')),
+            conv_rate: M.div(n('conversions'), n('leads')),
+            roas: M.div(revenue, spend),
+            roi: M.div(revenue - spend, spend),
+            budget_usage: M.div(spend, n('budget')),
+            remaining: n('budget') - spend,
+            gross: revenue - spend,
+        };
+    },
+
+    /** Ratios of a group are recomputed from summed counters, never averaged. */
+    totals(list) {
+        const keys = ['budget', 'spend', 'impressions', 'clicks', 'leads', 'conversions', 'revenue', 'booked'];
+        const sum = Object.fromEntries(keys.map(k => [k, 0]));
+        list.forEach(c => keys.forEach(k => { sum[k] += Number(c[k]) || 0; }));
+        sum.count = list.length;
+        return Object.assign(sum, M.metrics(sum));
+    },
+
+    byChannel(list) {
+        const groups = {};
+        list.forEach(c => { (groups[c.channel || 'other'] ||= []).push(c); });
+        return Object.entries(groups).map(([channel, items]) => Object.assign({ channel }, M.totals(items)))
+            .sort((a, b) => b.spend - a.spend);
+    },
+
+    splitVat(amount, ratePct, inclusive) {
+        const r = Math.max(0, ratePct) / 100;
+        let net, vat, total;
+        if (inclusive) { total = round2(amount); net = round2(total / (1 + r)); vat = round2(total - net); }
+        else { net = round2(amount); vat = round2(net * r); total = round2(net + vat); }
+        return { net, vat, total };
+    },
+
+    journalLines(txns, acc) {
+        const lines = [];
+        txns.forEach(t => {
+            const money = t.method === 'cash' ? acc.cash : acc.bank;
+            const income = t.type === 'income';
+            const catAcc = (t.account_code || '').trim() || (income ? acc.income_default : acc.expense_default);
+            const base = { txn_id: t.id, date: t.txn_date, doc_no: t.doc_no || '', description: (t.description || '').trim() || t.category_name || '' };
+            const net = Number(t.amount) || 0, vat = Number(t.vat_amount) || 0, total = Number(t.total) || net + vat;
+            if (income) {
+                lines.push({ ...base, account: money, debit: total, credit: 0 });
+                lines.push({ ...base, account: catAcc, debit: 0, credit: net });
+                if (vat > 0) { lines.push({ ...base, account: acc.vat_out, debit: 0, credit: vat }); }
+            } else {
+                lines.push({ ...base, account: catAcc, debit: net, credit: 0 });
+                if (vat > 0) { lines.push({ ...base, account: acc.vat_in, debit: vat, credit: 0 }); }
+                lines.push({ ...base, account: money, debit: 0, credit: total });
+            }
+        });
+        return lines;
+    },
+
+    trialBalance(lines) {
+        const accounts = {};
+        let debit = 0, credit = 0;
+        lines.forEach(l => {
+            const a = accounts[l.account] ||= { debit: 0, credit: 0 };
+            a.debit += l.debit; a.credit += l.credit; debit += l.debit; credit += l.credit;
+        });
+        const sorted = Object.keys(accounts).sort((a, b) => (a < b ? -1 : a > b ? 1 : 0))
+            .map(code => ({ code, debit: round2(accounts[code].debit), credit: round2(accounts[code].credit) }));
+        return { accounts: sorted, debit: round2(debit), credit: round2(credit) };
+    },
+
+    summarize(txns) {
+        const s = { income: 0, expense: 0, vat_out: 0, vat_in: 0, cash_in: 0, cash_out: 0, count: txns.length };
+        txns.forEach(t => {
+            if (t.type === 'income') { s.income += +t.amount; s.vat_out += +t.vat_amount; s.cash_in += +t.total; }
+            else { s.expense += +t.amount; s.vat_in += +t.vat_amount; s.cash_out += +t.total; }
+        });
+        s.profit = s.income - s.expense;
+        s.margin = M.div(s.profit, s.income);
+        s.vat_payable = Math.max(0, s.vat_out - s.vat_in);
+        s.vat_carry = Math.max(0, s.vat_in - s.vat_out);
+        s.net_cash = s.cash_in - s.cash_out;
+        ['income', 'expense', 'vat_out', 'vat_in', 'cash_in', 'cash_out', 'profit', 'vat_payable', 'vat_carry', 'net_cash'].forEach(k => { s[k] = round2(s[k]); });
+        return s;
+    },
+
+    monthly(txns, year) {
+        const buckets = Array.from({ length: 12 }, () => []);
+        txns.forEach(t => {
+            if (Number(t.txn_date.slice(0, 4)) === year) { buckets[Number(t.txn_date.slice(5, 7)) - 1].push(t); }
+        });
+        return buckets.map(M.summarize);
+    },
+
+    quarterly(monthly) {
+        return [0, 1, 2, 3].map(q => {
+            const sum = { income: 0, expense: 0, profit: 0, vat_out: 0, vat_in: 0 };
+            monthly.slice(q * 3, q * 3 + 3).forEach(m => Object.keys(sum).forEach(k => { sum[k] += m[k]; }));
+            sum.vat_payable = Math.max(0, sum.vat_out - sum.vat_in);
+            sum.vat_carry = Math.max(0, sum.vat_in - sum.vat_out);
+            return sum;
+        });
+    },
+
+    byCategory(txns) {
+        const out = { income: {}, expense: {} };
+        txns.forEach(t => {
+            const type = t.type === 'income' ? 'income' : 'expense';
+            const g = out[type][t.category_name || '—'] ||= { name: t.category_name || '—', net: 0, vat: 0, total: 0, count: 0, account_code: t.account_code || '', is_marketing: !!t.is_marketing };
+            g.net += +t.amount; g.vat += +t.vat_amount; g.total += +t.total; g.count++;
+        });
+        return { income: Object.values(out.income).sort((a, b) => b.net - a.net), expense: Object.values(out.expense).sort((a, b) => b.net - a.net) };
+    },
+
+    movement(txns) {
+        const m = { cash: 0, bank: 0 };
+        txns.forEach(t => { m[t.method === 'cash' ? 'cash' : 'bank'] += (t.type === 'income' ? 1 : -1) * Number(t.total); });
+        return { cash: round2(m.cash), bank: round2(m.bank) };
+    },
+
+    plan(target, aov, closeRate, cpl) {
+        let orders = M.div(target, aov); orders = orders == null ? null : Math.ceil(orders - 1e-9);
+        let leads = orders == null ? null : M.div(orders, closeRate); leads = leads == null ? null : Math.ceil(leads - 1e-9);
+        const budget = leads == null ? null : leads * cpl;
+        return { orders, leads, budget, roas: budget == null ? null : M.div(target, budget), cpa: budget == null || orders == null ? null : M.div(budget, orders) };
+    },
+};
+
+/* ---------------------------------------------------------------- storage */
+
+const COLLECTIONS = ['categories', 'campaigns', 'content', 'leads', 'transactions'];
+
+function storageAvailable() {
+    try { localStorage.setItem('__so_test', '1'); localStorage.removeItem('__so_test'); return true; } catch (e) { return false; }
+}
+const storageOk = storageAvailable();
+
+function emptyDb() {
+    return { version: 1, nextId: 1, meta: { last_backup: null }, settings: { opening_cash: 0, opening_bank: 0, accounts: { ...ACCOUNT_DEFAULTS } },
+        categories: [], campaigns: [], content: [], leads: [], transactions: [] };
+}
+
+function seedCategories(d) {
+    DEFAULT_CATEGORIES.forEach(([name, type, account_code, is_marketing], i) => {
+        d.categories.push({ id: d.nextId++, name, type, account_code, is_marketing, sort_order: i * 10 });
+    });
+}
+
+/** Validates a parsed backup or stored object. Returns a clean database or null. */
+function normalize(raw) {
+    if (!raw || typeof raw !== 'object' || !COLLECTIONS.every(k => raw[k] === undefined || Array.isArray(raw[k]))) { return null; }
+    if (!COLLECTIONS.some(k => Array.isArray(raw[k]))) { return null; }
+    const d = emptyDb();
+    let maxId = 0;
+    COLLECTIONS.forEach(k => {
+        d[k] = (raw[k] || []).filter(x => x && typeof x === 'object' && Number.isFinite(Number(x.id)))
+            .map(x => ({ ...x, id: Number(x.id) }));
+        d[k].forEach(x => { maxId = Math.max(maxId, x.id); });
+    });
+    const s = raw.settings || {};
+    d.settings.opening_cash = Number(s.opening_cash) || 0;
+    d.settings.opening_bank = Number(s.opening_bank) || 0;
+    d.settings.accounts = { ...ACCOUNT_DEFAULTS };
+    Object.keys(ACCOUNT_DEFAULTS).forEach(k => {
+        if (s.accounts && typeof s.accounts[k] === 'string' && validAccount(s.accounts[k]) && s.accounts[k] !== '') { d.settings.accounts[k] = s.accounts[k]; }
+    });
+    d.nextId = Math.max(Number(raw.nextId) || 1, maxId + 1);
+    const lb = raw.meta && raw.meta.last_backup;
+    d.meta.last_backup = typeof lb === 'string' && !isNaN(Date.parse(lb)) ? lb : null;
+    return d;
+}
+
+function load() {
+    let d = null;
+    if (storageOk) {
+        try { const raw = localStorage.getItem(STORE_KEY); if (raw) { d = normalize(JSON.parse(raw)); } } catch (e) { d = null; }
+    }
+    if (!d) { d = emptyDb(); seedCategories(d); }
+    return d;
+}
+
+let db = load();
+
+function persist() {
+    if (!storageOk) { return false; }
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(db)); return true; }
+    catch (e) { toast('Không lưu được: bộ nhớ trình duyệt đã đầy hoặc bị chặn. Hãy sao lưu ra file ngay.'); return false; }
+}
+
+const nowStamp = () => new Date().toISOString();
+
+function upsert(list, rec) {
+    if (rec.id) {
+        const i = list.findIndex(x => x.id === rec.id);
+        if (i < 0) { return false; }
+        list[i] = { ...list[i], ...rec, updated_at: nowStamp() };
+    } else {
+        rec.id = db.nextId++;
+        rec.created_at = rec.updated_at = nowStamp();
+        list.push(rec);
+    }
+    return true;
+}
+
+const byId = (list, id) => list.find(x => x.id === Number(id)) || null;
+const validAccount = code => code === '' || /^[0-9A-Za-z.\-]{1,20}$/.test(code);
+
+/* ---------------------------------------------------------------- saving with validation */
+
+function result(errors, rec, list) {
+    if (errors.length) { return { ok: false, errors }; }
+    if (!upsert(list, rec)) { return { ok: false, errors: ['Không tìm thấy mục này, có thể đã bị xóa.'] }; }
+    persist();
+    return { ok: true, errors: [], rec };
+}
+
+function saveCampaign(f, id) {
+    const n = k => Math.max(0, parseNum(f[k]));
+    const rec = {
+        id: id || 0, name: clip(f.name), channel: oneOf('channel', f.channel, 'other'), objective: oneOf('objective', f.objective, 'sales'),
+        status: oneOf('campaign_status', f.status, 'planned'), start_date: parseDate(f.start_date), end_date: parseDate(f.end_date),
+        budget: n('budget'), spend: n('spend'), impressions: Math.round(n('impressions')), clicks: Math.round(n('clicks')),
+        leads: Math.round(n('leads')), conversions: Math.round(n('conversions')), revenue: n('revenue'),
+        owner: clip(f.owner, 100), notes: clip(f.notes, 5000),
+    };
+    const e = [];
+    if (!rec.name) { e.push('Nhập tên chiến dịch.'); }
+    if (rec.start_date && rec.end_date && rec.end_date < rec.start_date) { e.push('Ngày kết thúc phải sau ngày bắt đầu.'); }
+    if (rec.impressions > 0 && rec.clicks > rec.impressions) { e.push('Lượt click không thể lớn hơn lượt hiển thị.'); }
+    if (!rec.id) { delete rec.id; }
+    return result(e, rec, db.campaigns);
+}
+
+function saveContent(f, id) {
+    let url = clip(f.url, 500);
+    if (url && !/^https?:\/\//i.test(url)) { url = 'https://' + url; }
+    let urlOk = true;
+    if (url) { try { const u = new URL(url); urlOk = /^https?:$/.test(u.protocol) && u.hostname.includes('.'); } catch (err) { urlOk = false; } }
+    const rec = {
+        id: id || 0, title: clip(f.title), channel: oneOf('channel', f.channel, 'facebook'), format: oneOf('format', f.format, 'post'),
+        publish_date: parseDate(f.publish_date), status: oneOf('content_status', f.status, 'idea'),
+        campaign_id: byId(db.campaigns, f.campaign_id) ? Number(f.campaign_id) : null,
+        assignee: clip(f.assignee, 100), url: url && urlOk ? url : '', notes: clip(f.notes, 5000),
+    };
+    const e = [];
+    if (!rec.title) { e.push('Nhập tiêu đề.'); }
+    if (url && !urlOk) { e.push('Link không hợp lệ.'); }
+    if (!rec.id) { delete rec.id; }
+    return result(e, rec, db.content);
+}
+
+function saveLead(f, id) {
+    const email = clip(f.email);
+    const rec = {
+        id: id || 0, name: clip(f.name), company: clip(f.company), phone: clip(f.phone, 50), email,
+        campaign_id: byId(db.campaigns, f.campaign_id) ? Number(f.campaign_id) : null,
+        source: oneOf('channel', f.source, 'other'), stage: oneOf('stage', f.stage, 'new'),
+        value: Math.max(0, parseNum(f.value)), assignee: clip(f.assignee, 100), notes: clip(f.notes, 5000),
+    };
+    const e = [];
+    if (!rec.name) { e.push('Nhập tên khách.'); }
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { e.push('Email không hợp lệ.'); }
+    if (!rec.id) { delete rec.id; }
+    return result(e, rec, db.leads);
+}
+
+function saveTxn(f, id) {
+    const type = oneOf('type', f.type, 'expense');
+    const cat = byId(db.categories, f.category_id);
+    const amount = parseNum(f.amount);
+    const rate = Number(f.vat_rate);
+    const date = parseDate(f.txn_date);
+    const e = [];
+    if (!date) { e.push('Nhập ngày hợp lệ.'); }
+    if (!cat || cat.type !== type) { e.push('Chọn hạng mục đúng loại thu hoặc chi.'); }
+    if (!(amount > 0)) { e.push('Số tiền phải lớn hơn 0.'); }
+    if (!VAT_RATES.includes(rate)) { e.push('Thuế suất VAT chỉ được là 0%, 5%, 8% hoặc 10%.'); }
+    const split = M.splitVat(Math.max(0, amount), VAT_RATES.includes(rate) ? rate : 0, !!f.vat_inclusive);
+    const campaignId = type === 'expense' && byId(db.campaigns, f.campaign_id) ? Number(f.campaign_id) : null;
+    const rec = {
+        id: id || 0, txn_date: date, type, category_id: cat ? cat.id : null,
+        amount: split.net, vat_rate: rate, vat_amount: split.vat, total: split.total,
+        method: oneOf('method', f.method, 'bank'), counterparty: clip(f.counterparty), doc_no: clip(f.doc_no, 100),
+        campaign_id: campaignId, description: clip(f.description, 2000),
+    };
+    if (!rec.id) { delete rec.id; }
+    return result(e, rec, db.transactions);
+}
+
+function saveCategory(f, id) {
+    const rec = {
+        id: id || 0, name: clip(f.name), type: oneOf('type', f.type, 'expense'), account_code: clip(f.account_code, 20),
+        is_marketing: !!f.is_marketing, sort_order: Math.round(parseNum(f.sort_order)),
+    };
+    const e = [];
+    if (!rec.name) { e.push('Nhập tên hạng mục.'); }
+    if (!validAccount(rec.account_code)) { e.push('Số tài khoản chỉ gồm chữ, số, dấu chấm hoặc gạch ngang (tối đa 20 ký tự).'); }
+    if (rec.id && db.transactions.some(t => t.category_id === rec.id) && byId(db.categories, rec.id).type !== rec.type) {
+        e.push('Hạng mục đã có bút toán nên không đổi được loại thu / chi.');
+    }
+    if (!rec.id) { delete rec.id; }
+    return result(e, rec, db.categories);
+}
+
+function saveSetup(f) {
+    const e = [];
+    const accounts = {};
+    Object.keys(ACCOUNT_DEFAULTS).forEach(k => {
+        const code = clip(f['account_' + k], 20);
+        if (!code || !validAccount(code)) { e.push(ACCOUNT_LABELS[k] + ': số tài khoản không hợp lệ.'); }
+        accounts[k] = code;
+    });
+    if (e.length) { return { ok: false, errors: e }; }
+    db.settings = { opening_cash: parseNum(f.opening_cash), opening_bank: parseNum(f.opening_bank), accounts };
+    persist();
+    return { ok: true, errors: [] };
+}
+
+function removeRecord(kind, id) {
+    id = Number(id);
+    if (kind === 'category' && db.transactions.some(t => t.category_id === id)) {
+        return 'Hạng mục đang có bút toán, không thể xóa. Đổi tên hoặc chuyển bút toán sang hạng mục khác trước.';
+    }
+    if (kind === 'campaign') {
+        ['content', 'leads', 'transactions'].forEach(k => db[k].forEach(x => { if (x.campaign_id === id) { x.campaign_id = null; } }));
+    }
+    const list = db[KINDS[kind].list];
+    const i = list.findIndex(x => x.id === id);
+    if (i >= 0) { list.splice(i, 1); }
+    persist();
+    return null;
+}
+
+/* ---------------------------------------------------------------- queries */
+
+function withCategory(txns) {
+    const cats = new Map(db.categories.map(c => [c.id, c]));
+    return txns.map(t => {
+        const c = cats.get(t.category_id);
+        return { ...t, category_name: c ? c.name : '—', account_code: c ? c.account_code : '', is_marketing: c ? !!c.is_marketing : false };
+    }).sort((a, b) => (a.txn_date < b.txn_date ? -1 : a.txn_date > b.txn_date ? 1 : a.id - b.id));
+}
+
+function txnsBetween(from, to) { return withCategory(db.transactions.filter(t => t.txn_date >= from && t.txn_date <= to)); }
+
+function activeInYear(c, y) {
+    const start = y + '-01-01', end = y + '-12-31';
+    if (!c.start_date) { return true; }
+    if (c.start_date >= start && c.start_date <= end) { return true; }
+    return c.start_date < start && (!c.end_date || c.end_date >= start);
+}
+
+function campaignRows(f = {}) {
+    const booked = {}, crm = {};
+    db.transactions.forEach(t => { if (t.type === 'expense' && t.campaign_id) { booked[t.campaign_id] = (booked[t.campaign_id] || 0) + Number(t.amount); } });
+    db.leads.forEach(l => { if (l.campaign_id) { crm[l.campaign_id] = (crm[l.campaign_id] || 0) + 1; } });
+    return db.campaigns
+        .filter(c => (!f.year || activeInYear(c, f.year)) && (!f.status || c.status === f.status) && (!f.channel || c.channel === f.channel))
+        .map(c => {
+            const row = { ...c, booked: round2(booked[c.id] || 0), crm_leads: crm[c.id] || 0 };
+            row.gap = round2((Number(c.spend) || 0) - row.booked);
+            row.m = M.metrics(row);
+            return row;
+        })
+        .sort((a, b) => (b.start_date || '9999').localeCompare(a.start_date || '9999') || b.id - a.id);
+}
+
+function campaignNames() {
+    return Object.fromEntries([...db.campaigns].sort((a, b) => a.name.localeCompare(b.name, 'vi')).map(c => [c.id, c.name]));
+}
+
+function leadStats(list) {
+    const s = { total: list.length, won: 0, lost: 0, open: 0, pipeline: 0, won_value: 0 };
+    list.forEach(l => {
+        if (l.stage === 'won') { s.won++; s.won_value += Number(l.value) || 0; }
+        else if (l.stage === 'lost') { s.lost++; }
+        else { s.open++; s.pipeline += Number(l.value) || 0; }
+    });
+    s.win_rate = M.div(s.won, s.won + s.lost);
+    return s;
+}
+
+function balanceBefore(date) {
+    const mv = M.movement(db.transactions.filter(t => t.txn_date < date));
+    const cash = round2(db.settings.opening_cash + mv.cash), bank = round2(db.settings.opening_bank + mv.bank);
+    return { cash, bank, total: round2(cash + bank) };
+}
+
+function cashBook(from, to, f = {}) {
+    const all = txnsBetween(from, to);
+    const filtered = !!(f.type || f.category || f.method || f.campaign);
+    const rows = all.filter(t => (!f.type || t.type === f.type) && (!f.category || t.category_id === Number(f.category))
+        && (!f.method || t.method === f.method) && (!f.campaign || t.campaign_id === Number(f.campaign)));
+    const opening = balanceBefore(from);
+    let running = opening.total;
+    const out = rows.map(t => {
+        if (filtered) { return { ...t, balance: null }; }
+        running = round2(running + (t.type === 'income' ? 1 : -1) * Number(t.total));
+        return { ...t, balance: running };
+    });
+    const mv = M.movement(all);
+    const closing = { cash: round2(opening.cash + mv.cash), bank: round2(opening.bank + mv.bank) };
+    closing.total = round2(closing.cash + closing.bank);
+    return { rows: out, summary: M.summarize(rows), opening, closing, filtered };
+}
+
+function yearReport(year) {
+    const from = year + '-01-01', to = year + '-12-31';
+    const txns = txnsBetween(from, to);
+    const monthly = M.monthly(txns, year);
+    const summary = M.summarize(txns);
+    const marketing = round2(txns.filter(t => t.type === 'expense' && t.is_marketing).reduce((s, t) => s + Number(t.amount), 0));
+    const opening = balanceBefore(from);
+    const mv = M.movement(txns);
+    return {
+        year, summary, monthly, quarterly: M.quarterly(monthly), categories: M.byCategory(txns), opening, movement: mv,
+        closing: { cash: round2(opening.cash + mv.cash), bank: round2(opening.bank + mv.bank) },
+        marketing: { spend: marketing, share_of_revenue: M.div(marketing, summary.income), share_of_costs: M.div(marketing, summary.expense) },
+    };
+}
+
+function journal(from, to) {
+    const lines = M.journalLines(txnsBetween(from, to), db.settings.accounts);
+    return { lines, trial: M.trialBalance(lines) };
+}
+
+/* ---------------------------------------------------------------- CSV & files */
+
+function csv(header, rows) {
+    const cell = v => {
+        if (typeof v === 'number') { return String(v); }
+        let s = v == null ? '' : String(v);
+        if (s && isNaN(Number(s)) && /^[=+\-@\t\r]/.test(s)) { s = "'" + s; }
+        return /[",\n\r]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    };
+    return '\uFEFF' + [header, ...rows].map(r => r.map(cell).join(',')).join('\r\n') + '\r\n';
+}
+
+function download(filename, text, type = 'text/csv;charset=utf-8') {
+    const blob = new Blob([text], { type });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 1000);
+}
+
+const r0 = v => (v == null || !isFinite(v) ? '' : Math.round(v));
+const r4 = v => (v == null || !isFinite(v) ? '' : Math.round(v * 10000) / 10000);
+
+const EXPORTS = {
+    campaigns(year) {
+        const rows = campaignRows({ year }).map(c => [c.name, label('channel', c.channel), label('campaign_status', c.status), c.start_date || '', c.end_date || '',
+            c.budget, c.spend, c.booked, c.impressions, c.clicks, c.leads, c.conversions, c.revenue,
+            r4(c.m.ctr), r0(c.m.cpc), r0(c.m.cpl), r0(c.m.cpa), r4(c.m.roas), r4(c.m.roi)]);
+        download('chien-dich-' + year + '.csv', csv(['Tên', 'Kênh', 'Trạng thái', 'Bắt đầu', 'Kết thúc', 'Ngân sách', 'Đã chi', 'Đã ghi sổ',
+            'Hiển thị', 'Click', 'Leads', 'Đơn hàng', 'Doanh thu', 'CTR', 'CPC', 'CPL', 'CPA', 'ROAS', 'ROI'], rows));
+    },
+    ledger(from, to) {
+        const names = campaignNames();
+        const rows = cashBook(from, to).rows.map(t => [t.txn_date, t.doc_no, label('type', t.type), t.category_name, t.account_code, t.description,
+            t.counterparty, label('method', t.method), t.amount, t.vat_rate, t.vat_amount, t.total, t.balance, names[t.campaign_id] || '']);
+        download('so-thu-chi_' + from + '_' + to + '.csv', csv(['Ngày', 'Số chứng từ', 'Loại', 'Hạng mục', 'Số TK', 'Diễn giải', 'Đối tác',
+            'Hình thức', 'Trước thuế', 'Thuế suất', 'VAT', 'Tổng tiền', 'Số dư', 'Chiến dịch'], rows));
+    },
+    journal(from, to) {
+        const rows = journal(from, to).lines.map(l => [l.date, l.doc_no, l.description, l.account, l.debit, l.credit]);
+        download('nhat-ky-chung_' + from + '_' + to + '.csv', csv(['Ngày', 'Số chứng từ', 'Diễn giải', 'Tài khoản', 'Nợ', 'Có'], rows));
+    },
+};
+
+/* ---------------------------------------------------------------- UI state */
+
+const ui = {
+    dashYear: thisYear(),
+    camp: { year: thisYear(), status: '', channel: '' },
+    month: today().slice(0, 7),
+    leads: { campaign: '', q: '' },
+    ledger: { from: today().slice(0, 8) + '01', to: monthEnd(thisYear(), new Date().getMonth() + 1), type: '', category: '', method: '', campaign: '' },
+    reportYear: thisYear(),
+    journal: { from: today().slice(0, 8) + '01', to: monthEnd(thisYear(), new Date().getMonth() + 1) },
+};
+
+/* ---------------------------------------------------------------- small UI pieces */
+
+const ICON = {
+    plus: '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>',
+    down: '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11m0 0l-4.5-4.5M12 15l4.5-4.5M5 20h14" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    left: '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    right: '<svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7" stroke="currentColor" stroke-width="2.2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+};
+
+function pageHead(title, desc, actions = '') {
+    return `<div class="page-head"><div><h1>${h(title)}</h1>${desc ? `<p>${desc}</p>` : ''}</div>`
+        + (actions ? `<div class="page-actions">${actions}</div>` : '') + '</div>'
+        + (storageOk ? '' : '<p class="notice is-red">Trình duyệt đang chặn bộ nhớ nên dữ liệu sẽ mất khi tải lại trang. Hãy mở trang qua GitHub Pages (https://) hoặc dùng trình duyệt khác, và sao lưu ra file trước khi đóng.</p>');
+}
+
+function selectBox(opts, selected, attrs = '', empty = null) {
+    const options = (empty !== null ? `<option value="">${h(empty)}</option>` : '')
+        + Object.entries(opts).map(([v, t]) => `<option value="${h(v)}"${String(selected) === String(v) ? ' selected' : ''}>${h(t)}</option>`).join('');
+    return `<select ${attrs}>${options}</select>`;
+}
+
+function yearOptions() {
+    const years = new Set();
+    for (let y = thisYear() + 1; y >= thisYear() - 4; y--) { years.add(y); }
+    db.campaigns.forEach(c => { if (c.start_date) { years.add(Number(c.start_date.slice(0, 4))); } });
+    db.transactions.forEach(t => years.add(Number(t.txn_date.slice(0, 4))));
+    return Object.fromEntries([...years].sort((a, b) => b - a).map(y => [y, String(y)]));
+}
+
+function filterSelect(id, labelText, path, opts, value, empty = 'Tất cả') {
+    return `<div><label for="${id}">${h(labelText)}</label>${selectBox(opts, value, `id="${id}" data-filter="${path}"`, empty)}</div>`;
+}
+
+function tag(group, key) { return `<span class="tag is-${h(key)}">${h(label(group, key))}</span>`; }
+
+function tally(rows) {
+    return '<dl class="tally">' + rows.map(r => {
+        const [name, value, opt = {}] = r;
+        return `<div class="${opt.total ? 'total' : ''}"><dt>${h(name)}</dt><span class="lead" aria-hidden="true"></span>`
+            + `<dd class="${opt.cls || ''}">${value}</dd>${opt.note ? `<span class="note">${opt.note}</span>` : ''}</div>`;
+    }).join('') + '</dl>';
+}
+
+function rowActions(kind, id) {
+    return `<td class="actions"><button type="button" class="btn btn-link" data-act="edit" data-kind="${kind}" data-id="${id}">Sửa</button> `
+        + `<button type="button" class="btn btn-link is-danger" data-act="delete" data-kind="${kind}" data-id="${id}">Xóa</button></td>`;
+}
+
+const addBtn = (kind, text, extra = '') => `<button type="button" class="btn btn-primary" data-act="add" data-kind="${kind}" ${extra}>${ICON.plus}${h(text)}</button>`;
+const exportBtn = (what, text = 'Xuất CSV') => `<button type="button" class="btn" data-act="export" data-what="${what}">${ICON.down}${h(text)}</button>`;
+const signed = v => `<span class="${v < 0 ? 'neg' : ''}">${fmt.money(v)}</span>`;
+
+function emptyBlock(title, text, actions) {
+    return `<div class="empty"><h2>${h(title)}</h2><p class="muted">${text}</p><div class="page-actions">${actions}</div></div>`;
+}
+
+function budgetBar(usage) {
+    if (usage == null) { return ''; }
+    return `<div class="bar${usage > 1 ? ' is-over' : ''}" role="img" aria-label="Đã dùng ${fmt.pct(usage, 0)} ngân sách"><span style="width:${Math.round(Math.min(1, Math.max(0, usage)) * 100)}%"></span></div>`;
+}
+
+/* ---------------------------------------------------------------- charts (inline SVG, no library) */
+
+function channelChart(channels) {
+    const rows = channels.filter(c => c.spend > 0 || c.revenue > 0);
+    if (!rows.length) { return ''; }
+    const max = Math.max(...rows.map(c => Math.max(c.spend, c.revenue)), 1);
+    const W = 460, L = 92, R = 56, rowH = 46, top = 6, barW = W - L - R;
+    const body = rows.map((c, i) => {
+        const y = top + i * rowH;
+        const ws = c.spend / max * barW, wr = c.revenue / max * barW;
+        return `<text x="0" y="${y + 19}" style="fill:var(--ink)">${h(label('channel', c.channel))}</text>`
+            + `<rect x="${L}" y="${y + 4}" width="${Math.max(ws, 1)}" height="14" fill="#C8102E"><title>Chi phí ${fmt.money(c.spend)}</title></rect>`
+            + `<text x="${L + ws + 6}" y="${y + 16}">${fmt.short(c.spend)}</text>`
+            + `<rect x="${L}" y="${y + 20}" width="${Math.max(wr, 1)}" height="14" fill="#2346A0"><title>Doanh thu ${fmt.money(c.revenue)}</title></rect>`
+            + `<text x="${L + wr + 6}" y="${y + 32}">${fmt.short(c.revenue)}</text>`;
+    }).join('');
+    return '<div class="legend"><span><i style="background:#C8102E"></i>Chi phí</span><span><i style="background:#2346A0"></i>Doanh thu</span></div>'
+        + `<svg class="chart is-compact" viewBox="0 0 ${W} ${top + rows.length * rowH}" role="img" aria-label="Chi phí và doanh thu theo kênh">${body}</svg>`;
+}
+
+function monthChart(monthly) {
+    const W = 720, H = 240, L = 54, B = 26, T = 10, plotH = H - B - T, slot = (W - L - 6) / 12;
+    const values = monthly.flatMap(m => [m.income, m.expense, m.profit]);
+    const max = Math.max(...values, 1), min = Math.min(...values, 0);
+    const y = v => T + (max - v) / (max - min) * plotH;
+    const ticks = [max, (max + min) / 2, min, 0].filter((v, i, a) => a.indexOf(v) === i);
+    let out = ticks.map(v => `<line x1="${L}" x2="${W}" y1="${y(v)}" y2="${y(v)}" stroke="${v === 0 ? '#A9B1C0' : '#E3E7EE'}"/>`
+        + `<text x="${L - 6}" y="${y(v) + 4}" text-anchor="end">${fmt.short(v)}</text>`).join('');
+    const bw = Math.min(16, slot / 3);
+    monthly.forEach((m, i) => {
+        const x = L + i * slot + slot / 2;
+        const bar = (v, dx, color, name) => {
+            const top = Math.min(y(v), y(0)), hgt = Math.abs(y(v) - y(0));
+            return `<rect x="${x + dx}" y="${top}" width="${bw}" height="${Math.max(hgt, v ? 1 : 0)}" fill="${color}"><title>${name} T${i + 1}: ${fmt.money(v)}</title></rect>`;
+        };
+        out += bar(m.income, -bw - 1, '#2346A0', 'Doanh thu') + bar(m.expense, 1, '#C8102E', 'Chi phí')
+            + `<text x="${x}" y="${H - 8}" text-anchor="middle">T${i + 1}</text>`;
+    });
+    const pts = monthly.map((m, i) => `${L + i * slot + slot / 2},${y(m.profit)}`).join(' ');
+    out += `<polyline points="${pts}" fill="none" stroke="#1F2A44" stroke-width="2" stroke-linejoin="round"/>`
+        + monthly.map((m, i) => `<circle cx="${L + i * slot + slot / 2}" cy="${y(m.profit)}" r="3" fill="#1F2A44"><title>Lợi nhuận T${i + 1}: ${fmt.money(m.profit)}</title></circle>`).join('');
+    return '<div class="legend"><span><i style="background:#2346A0"></i>Doanh thu</span><span><i style="background:#C8102E"></i>Chi phí</span><span><i style="background:#1F2A44;height:3px;vertical-align:3px"></i>Lợi nhuận</span></div>'
+        + `<div class="scroll"><svg class="chart" viewBox="0 0 ${W} ${H}" style="min-width:560px" role="img" aria-label="Doanh thu, chi phí và lợi nhuận theo tháng">${out}</svg></div>`;
+}
+
+/* ---------------------------------------------------------------- pages */
+
+const VIEWS = {};
+
+VIEWS.dashboard = () => {
+    const y = ui.dashYear;
+    const rows = campaignRows({ year: y });
+    const t = M.totals(rows);
+    const actions = `<div><label for="dash-year">Năm</label>${selectBox(yearOptions(), y, 'id="dash-year" data-filter="dashYear"')}</div>`;
+    let html = pageHead('Tổng quan marketing', 'Chiến dịch hoạt động trong năm, chi phí so với doanh thu, nội dung sắp đăng và leads.', actions);
+
+    if (!rows.length) {
+        const fresh = !db.campaigns.length && !db.transactions.length && !db.leads.length;
+        html += emptyBlock(fresh ? 'Bắt đầu theo dõi marketing' : 'Chưa có chiến dịch nào trong năm ' + y,
+            fresh ? 'Thêm chiến dịch đầu tiên với số liệu từ trình quản lý quảng cáo, hoặc tạo dữ liệu mẫu để xem trang hoạt động thế nào. Dữ liệu mẫu xóa được bất cứ lúc nào.'
+                : 'Chọn năm khác hoặc thêm chiến dịch mới.',
+            addBtn('campaign', 'Thêm chiến dịch') + (fresh ? '<button type="button" class="btn" data-act="sample">Tạo dữ liệu mẫu</button>' : ''));
+    } else {
+        const roasLow = t.roas != null && t.roas < 1;
+        html += `<p class="statement">Năm ${y}, ${rows.length} chiến dịch đã chi <b>${fmt.money(t.spend)}</b> và mang về <b>${fmt.money(t.revenue)}</b> doanh thu, `
+            + `ROAS <b class="roas${roasLow ? ' is-low' : ''}">${fmt.times(t.roas)}</b>.`
+            + (t.budget > 0 ? ` Đã dùng ${fmt.pct(t.budget_usage, 0)} ngân sách ${fmt.money(t.budget)}.` : '') + '</p>';
+
+        html += '<div class="tallies">'
+            + tally([
+                ['Lượt hiển thị', fmt.num(t.impressions), { note: 'CPM ' + fmt.money(t.cpm) }],
+                ['Lượt click', fmt.num(t.clicks), { note: 'CTR ' + fmt.pct(t.ctr, 2) + ', CPC ' + fmt.money(t.cpc) }],
+                ['Leads', fmt.num(t.leads), { note: 'CPL ' + fmt.money(t.cpl) }],
+                ['Đơn hàng', fmt.num(t.conversions), { note: 'CPA ' + fmt.money(t.cpa) }],
+            ])
+            + tally([
+                ['Ngân sách', fmt.money(t.budget)],
+                ['Đã chi', fmt.money(t.spend), { note: 'Đã ghi sổ ' + fmt.money(t.booked) }],
+                ['Doanh thu', fmt.money(t.revenue)],
+                ['Doanh thu trừ chi phí quảng cáo', signed(t.gross), { total: true, note: 'ROI ' + fmt.pct(t.roi, 0) }],
+            ])
+            + '</div>';
+
+        const channels = M.byChannel(rows);
+        const running = rows.filter(c => c.status === 'running');
+        const top = rows.filter(c => c.m.roas != null).sort((a, b) => b.m.roas - a.m.roas).slice(0, 5);
+        html += '<div class="split"><section><h2>Theo kênh</h2>' + channelChart(channels)
+            + '<div class="scroll"><table class="book"><thead><tr><th>Kênh</th><th class="num">Chi phí</th><th class="num">CPL</th><th class="num">Doanh thu</th><th class="num">ROAS</th></tr></thead><tbody>'
+            + channels.map(c => `<tr><td>${h(label('channel', c.channel))}</td><td class="num">${fmt.money(c.spend)}</td><td class="num">${fmt.money(c.cpl)}</td>`
+                + `<td class="num">${fmt.money(c.revenue)}</td><td class="num ${c.roas != null && c.roas < 1 ? 'neg' : ''}">${fmt.times(c.roas)}</td></tr>`).join('')
+            + '</tbody></table></div></section><section><h2>Đang chạy</h2>'
+            + (running.length ? running.map(c => `<div class="entry"><button type="button" class="btn-link btn title" data-act="edit" data-kind="campaign" data-id="${c.id}">${h(c.name)}</button>`
+                + `${tag('channel', c.channel)}<span class="muted small">${fmt.money(c.spend)} / ${fmt.money(c.budget)}</span><span class="small">ROAS ${fmt.times(c.m.roas)}</span></div>${budgetBar(c.m.budget_usage)}`).join('')
+                : '<p class="muted">Không có chiến dịch nào đang chạy.</p>')
+            + '<h2>ROAS cao nhất</h2>'
+            + (top.length ? '<ol>' + top.map(c => `<li>${h(c.name)} <span class="muted">(${h(label('channel', c.channel))})</span>: <b class="${c.m.roas < 1 ? 'neg' : ''}">${fmt.times(c.m.roas)}</b></li>`).join('') + '</ol>'
+                : '<p class="muted">Chưa có chiến dịch nào có chi phí.</p>')
+            + '</section></div>';
+    }
+
+    const upcoming = db.content.filter(c => c.publish_date && c.publish_date >= today() && c.publish_date <= addDays(today(), 14))
+        .sort((a, b) => a.publish_date.localeCompare(b.publish_date));
+    const stats = leadStats(db.leads);
+    const stageCounts = Object.keys(OPT.stage).map(s => [label('stage', s), fmt.num(db.leads.filter(l => l.stage === s).length)]);
+    html += '<div class="split"><section><h2>Nội dung 14 ngày tới</h2>'
+        + (upcoming.length ? upcoming.map(c => `<div class="entry"><span class="muted small">${fmt.date(c.publish_date)}</span>`
+            + `<button type="button" class="btn-link btn title" data-act="edit" data-kind="content" data-id="${c.id}">${h(c.title)}</button>${tag('channel', c.channel)}${tag('content_status', c.status)}</div>`).join('')
+            : '<p class="muted">Chưa có nội dung nào được lên lịch. <a href="#content">Mở lịch nội dung</a></p>')
+        + '</section><section><h2>Leads</h2>'
+        + tally([...stageCounts, ['Tỷ lệ chốt', fmt.pct(stats.win_rate, 0), { note: 'Chốt được / (chốt được + mất)' }],
+            ['Giá trị đang theo đuổi', fmt.money(stats.pipeline), { total: true }]])
+        + '</section></div>';
+
+    const from = today().slice(0, 8) + '01';
+    const fin = M.summarize(txnsBetween(from, today().slice(0, 8) + '31'));
+    html += '<h2>Tài chính tháng này</h2><div class="tallies">'
+        + tally([['Doanh thu (trước VAT)', fmt.money(fin.income)], ['Chi phí (trước VAT)', fmt.money(fin.expense)],
+            ['Lợi nhuận', signed(fin.profit), { total: true }]])
+        + tally([['VAT đầu ra', fmt.money(fin.vat_out)], ['VAT đầu vào', fmt.money(fin.vat_in)],
+            ['VAT phải nộp tạm tính', fmt.money(fin.vat_payable), { total: true }]])
+        + '</div><p><a href="#reports">Xem báo cáo tài chính cả năm</a></p>';
+    return html;
+};
+
+VIEWS.campaigns = () => {
+    const f = ui.camp;
+    const rows = campaignRows(f);
+    const t = M.totals(rows);
+    let html = pageHead('Chiến dịch', 'Nhập số liệu từ trình quản lý quảng cáo; CTR, CPC, CPL, CPA, ROAS và ROI được tự tính. Cột "Đã ghi sổ" lấy từ các khoản chi có gắn chiến dịch trong Sổ thu chi.',
+        addBtn('campaign', 'Thêm chiến dịch') + exportBtn('campaigns'));
+    html += '<div class="toolbar">' + filterSelect('f-year', 'Năm', 'camp.year', yearOptions(), f.year, null)
+        + filterSelect('f-status', 'Trạng thái', 'camp.status', OPT.campaign_status, f.status)
+        + filterSelect('f-channel', 'Kênh', 'camp.channel', OPT.channel, f.channel) + '</div>';
+    if (!rows.length) {
+        return html + emptyBlock('Không có chiến dịch phù hợp', 'Đổi bộ lọc hoặc thêm chiến dịch mới.', addBtn('campaign', 'Thêm chiến dịch'));
+    }
+    html += '<div class="scroll"><table class="book wide-first"><thead><tr><th>Chiến dịch</th><th>Trạng thái</th><th class="num">Đã chi / Ngân sách</th>'
+        + '<th class="num" title="Tổng chi trước VAT trong Sổ thu chi có gắn chiến dịch">Đã ghi sổ</th><th class="num">CTR<span class="sub">CPC</span></th>'
+        + '<th class="num">Leads<span class="sub">CPL</span></th><th class="num">Đơn hàng<span class="sub">CPA</span></th><th class="num">Doanh thu</th>'
+        + '<th class="num">ROAS</th><th class="num">ROI</th><th><span class="sr-only">Thao tác</span></th></tr></thead><tbody>';
+    html += rows.map(c => {
+        const dates = c.start_date ? fmt.date(c.start_date) + (c.end_date ? ' – ' + fmt.date(c.end_date) : '') : '';
+        return `<tr><td><b>${h(c.name)}</b><span class="sub">${h(label('channel', c.channel))}${c.owner ? ', ' + h(c.owner) : ''}</span>${dates ? `<span class="sub">${dates}</span>` : ''}</td>`
+            + `<td>${tag('campaign_status', c.status)}</td>`
+            + `<td class="num">${fmt.money(c.spend)}<span class="sub">/ ${fmt.money(c.budget)}</span>${c.budget > 0 ? budgetBar(c.m.budget_usage) : ''}</td>`
+            + `<td class="num">${fmt.money(c.booked)}${Math.abs(c.gap) >= 1 ? `<span class="sub ${c.gap > 0 ? 'neg' : ''}" title="Chênh lệch giữa số chi trên nền tảng và số đã ghi sổ">${c.gap > 0 ? '+' : ''}${fmt.money(c.gap)}</span>` : ''}</td>`
+            + `<td class="num">${fmt.pct(c.m.ctr, 2)}<span class="sub">${fmt.money(c.m.cpc)}</span></td>`
+            + `<td class="num">${fmt.num(c.leads)}${c.crm_leads ? ` <span class="muted small" title="Số lead đã nhập ở trang Leads">(${c.crm_leads})</span>` : ''}<span class="sub">${fmt.money(c.m.cpl)}</span></td>`
+            + `<td class="num">${fmt.num(c.conversions)}<span class="sub">${fmt.money(c.m.cpa)}</span></td>`
+            + `<td class="num">${fmt.money(c.revenue)}</td>`
+            + `<td class="num"><b class="${c.m.roas != null && c.m.roas < 1 ? 'neg' : ''}">${fmt.times(c.m.roas)}</b></td>`
+            + `<td class="num ${c.m.roi != null && c.m.roi < 0 ? 'neg' : ''}">${fmt.pct(c.m.roi, 0)}</td>` + rowActions('campaign', c.id) + '</tr>';
+    }).join('');
+    html += `</tbody><tfoot><tr><td colspan="2">Tổng cộng (${t.count})</td><td class="num">${fmt.money(t.spend)}<span class="sub">/ ${fmt.money(t.budget)}</span></td>`
+        + `<td class="num">${fmt.money(t.booked)}</td><td class="num">${fmt.pct(t.ctr, 2)}<span class="sub">${fmt.money(t.cpc)}</span></td>`
+        + `<td class="num">${fmt.num(t.leads)}<span class="sub">${fmt.money(t.cpl)}</span></td><td class="num">${fmt.num(t.conversions)}<span class="sub">${fmt.money(t.cpa)}</span></td>`
+        + `<td class="num">${fmt.money(t.revenue)}</td><td class="num">${fmt.times(t.roas)}</td><td class="num">${fmt.pct(t.roi, 0)}</td><td></td></tr></tfoot></table></div>`;
+    html += '<p class="hint">Số đỏ dưới cột "Đã ghi sổ" là phần đã chi trên nền tảng quảng cáo nhưng chưa có chứng từ trong Sổ thu chi. Số trong ngoặc ở cột Leads là số lead đã nhập ở trang Leads.</p>';
+    return html;
+};
+
+const WEEKDAYS = ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'];
+
+VIEWS.content = () => {
+    const [yy, mm] = ui.month.split('-').map(Number);
+    const from = ui.month + '-01', to = monthEnd(yy, mm);
+    const prev = ymd(new Date(yy, mm - 2, 1)).slice(0, 7), next = ymd(new Date(yy, mm, 1)).slice(0, 7);
+    const items = db.content.filter(c => c.publish_date && c.publish_date >= from && c.publish_date <= to)
+        .sort((a, b) => a.publish_date.localeCompare(b.publish_date) || a.id - b.id);
+    const backlog = db.content.filter(c => !c.publish_date).sort((a, b) => b.id - a.id);
+    const counts = Object.keys(OPT.content_status).map(s => [s, items.filter(i => i.status === s).length]).filter(x => x[1]);
+    const names = campaignNames();
+
+    let html = pageHead('Lịch nội dung', 'Lên lịch bài đăng theo kênh, đổi trạng thái ngay trên lịch. Ý tưởng chưa có ngày nằm ở cuối trang.', addBtn('content', 'Thêm nội dung'));
+    html += `<div class="toolbar"><div class="month-nav"><button type="button" class="btn" data-act="month" data-to="${prev}" aria-label="Tháng trước">${ICON.left}</button>`
+        + `<h2>Tháng ${mm}/${yy}</h2><button type="button" class="btn" data-act="month" data-to="${next}" aria-label="Tháng sau">${ICON.right}</button></div>`
+        + (ui.month !== today().slice(0, 7) ? `<button type="button" class="btn" data-act="month" data-to="${today().slice(0, 7)}">Về tháng này</button>` : '')
+        + `<div class="grow muted small">${counts.map(([s, n]) => tag('content_status', s) + ' ' + n).join('&nbsp;&nbsp; ')}</div></div>`;
+
+    if (!items.length) {
+        html += emptyBlock('Tháng này chưa có nội dung', 'Thêm bài đăng với ngày đăng trong tháng để thấy chúng ở đây.', addBtn('content', 'Thêm nội dung', `data-date="${from}"`));
+    } else {
+        const days = {};
+        items.forEach(i => { (days[i.publish_date] ||= []).push(i); });
+        html += '<div class="agenda">' + Object.entries(days).map(([day, list]) => {
+            const [y, m, d] = day.split('-').map(Number);
+            return `<div class="day${day === today() ? ' is-today' : ''}"><div class="when">${WEEKDAYS[new Date(y, m - 1, d).getDay()]}<b>${fmt.date(day)}</b></div><div>`
+                + list.map(c => `<div class="entry"><button type="button" class="btn-link btn title" data-act="edit" data-kind="content" data-id="${c.id}">${h(c.title)}</button>`
+                    + `${tag('channel', c.channel)}<span class="muted small">${h(label('format', c.format))}</span>`
+                    + (c.assignee ? `<span class="muted small">${h(c.assignee)}</span>` : '')
+                    + (c.campaign_id && names[c.campaign_id] ? `<span class="muted small">${h(names[c.campaign_id])}</span>` : '')
+                    + (c.url ? `<a class="small" href="${h(c.url)}" target="_blank" rel="noopener noreferrer">Mở link</a>` : '')
+                    + `<label class="sr-only" for="st-${c.id}">Trạng thái của ${h(c.title)}</label>`
+                    + selectBox(OPT.content_status, c.status, `id="st-${c.id}" data-set="content:status" data-id="${c.id}"`) + '</div>').join('')
+                + '</div></div>';
+        }).join('') + '</div>';
+    }
+
+    html += '<h2>Ý tưởng chưa có ngày đăng</h2>';
+    html += backlog.length
+        ? '<div class="agenda">' + backlog.map(c => `<div class="day"><div class="when">${tag('content_status', c.status)}</div><div class="entry">`
+            + `<button type="button" class="btn-link btn title" data-act="edit" data-kind="content" data-id="${c.id}">${h(c.title)}</button>${tag('channel', c.channel)}`
+            + `<button type="button" class="btn btn-link is-danger small" data-act="delete" data-kind="content" data-id="${c.id}">Xóa</button></div></div>`).join('') + '</div>'
+        : '<p class="muted">Chưa có ý tưởng nào. Khi thêm nội dung, để trống ngày đăng để lưu thành ý tưởng.</p>';
+    return html;
+};
+
+VIEWS.leads = () => {
+    const f = ui.leads;
+    const q = f.q.trim().toLowerCase();
+    const list = db.leads.filter(l => (!f.campaign || l.campaign_id === Number(f.campaign))
+        && (!q || [l.name, l.company, l.phone, l.email].some(v => String(v || '').toLowerCase().includes(q))))
+        .sort((a, b) => String(b.updated_at || '').localeCompare(String(a.updated_at || '')) || b.id - a.id);
+    const s = leadStats(list);
+    const names = campaignNames();
+
+    let html = pageHead('Leads', 'Khách hàng tiềm năng theo giai đoạn. Đổi giai đoạn bằng ô chọn trên từng thẻ.', addBtn('lead', 'Thêm lead'));
+    html += '<div class="toolbar">' + filterSelect('f-lcamp', 'Chiến dịch', 'leads.campaign', names, f.campaign)
+        + `<div class="grow"><label for="f-q">Tìm kiếm</label><input type="search" id="f-q" data-filter="leads.q" value="${h(f.q)}" placeholder="Tên, công ty, số điện thoại, email"></div></div>`;
+    html += '<div class="tallies" style="margin-bottom:24px">'
+        + tally([['Tổng số lead', fmt.num(s.total)], ['Đang mở', fmt.num(s.open)], ['Giá trị đang theo đuổi', fmt.money(s.pipeline), { total: true }]])
+        + tally([['Chốt được', fmt.num(s.won)], ['Tỷ lệ chốt', fmt.pct(s.win_rate, 0), { note: 'Chốt được / (chốt được + mất)' }], ['Giá trị đã chốt', fmt.money(s.won_value), { total: true }]])
+        + '</div>';
+    if (!db.leads.length) {
+        return html + emptyBlock('Chưa có lead nào', 'Thêm lead khi có khách để lại thông tin, gắn với chiến dịch để biết kênh nào mang về khách thật.', addBtn('lead', 'Thêm lead'));
+    }
+    html += '<div class="board">' + Object.keys(OPT.stage).map(stage => {
+        const cards = list.filter(l => l.stage === stage);
+        return `<section class="col" aria-label="${h(label('stage', stage))}"><h3>${tag('stage', stage)}<span class="muted small">${cards.length}</span></h3>`
+            + cards.map(l => `<article class="card"><p><button type="button" class="btn-link btn title" data-act="edit" data-kind="lead" data-id="${l.id}"><b>${h(l.name)}</b></button></p>`
+                + (l.company ? `<p class="muted">${h(l.company)}</p>` : '')
+                + (l.phone ? `<p><a href="tel:${h(l.phone.replace(/[^\d+]/g, ''))}">${h(l.phone)}</a></p>` : '')
+                + (l.campaign_id && names[l.campaign_id] ? `<p class="muted small">${h(names[l.campaign_id])}</p>` : '')
+                + `<div class="row"><b class="num small">${Number(l.value) > 0 ? fmt.money(l.value) : ''}</b>`
+                + `<label class="sr-only" for="mv-${l.id}">Giai đoạn của ${h(l.name)}</label>`
+                + selectBox(OPT.stage, l.stage, `id="mv-${l.id}" data-set="leads:stage" data-id="${l.id}"`) + '</div></article>').join('')
+            + '</section>';
+    }).join('') + '</div>';
+    return html;
+};
+
+VIEWS.tools = () => {
+    const input = (id, key, text, value, mode = 'decimal') => `<div><label for="${id}">${text}</label><input type="text" inputmode="${mode}" id="${id}" data-in="${key}" value="${value}"></div>`;
+    const outs = rows => '<dl class="tally">' + rows.map(([k, t, total]) => `<div class="${total ? 'total' : ''}"><dt>${t}</dt><span class="lead" aria-hidden="true"></span><dd data-out="${k}"></dd></div>`).join('') + '</dl>';
+    return pageHead('Công cụ tính', 'Tính ngay trên trình duyệt, không lưu lại. Gõ số theo kiểu 1.500.000 hoặc 1500000.')
+        + '<div class="calcs">'
+        + '<section class="calc" data-calc="roas" aria-live="polite"><h2>Quảng cáo lãi hay lỗ?</h2><p>So ROAS thực tế với ROAS hòa vốn theo biên lợi nhuận gộp của sản phẩm.</p><div class="grid">'
+        + input('c-spend', 'spend', 'Chi phí quảng cáo', '15.000.000') + input('c-rev', 'revenue', 'Doanh thu', '60.000.000')
+        + input('c-margin', 'margin', 'Biên lợi nhuận gộp (%)', '40') + '</div>'
+        + outs([['roas', 'ROAS'], ['breakeven', 'ROAS hòa vốn'], ['verdict', 'Kết luận'], ['profit', 'Lợi nhuận sau giá vốn và quảng cáo', true]]) + '</section>'
+        + '<section class="calc" data-calc="plan" aria-live="polite"><h2>Cần bao nhiêu ngân sách?</h2><p>Đi ngược từ doanh thu mục tiêu ra số đơn, số lead và ngân sách.</p><div class="grid">'
+        + input('p-target', 'target', 'Doanh thu mục tiêu', '100.000.000') + input('p-aov', 'aov', 'Giá trị đơn trung bình', '500.000')
+        + input('p-close', 'close', 'Tỷ lệ lead thành khách (%)', '10') + input('p-cpl', 'cpl', 'CPL dự kiến', '50.000') + '</div>'
+        + outs([['orders', 'Số đơn cần'], ['leads', 'Số lead cần'], ['cpa', 'CPA'], ['roas', 'ROAS dự kiến'], ['budget', 'Ngân sách cần', true]]) + '</section>'
+        + '<section class="calc" data-calc="funnel" aria-live="polite"><h2>Ngân sách này mang về bao nhiêu lead?</h2><p>Dự báo phễu từ ngân sách, CPM và các tỷ lệ chuyển đổi.</p><div class="grid">'
+        + input('f-budget', 'budget', 'Ngân sách', '20.000.000') + input('f-cpm', 'cpm', 'CPM', '40.000')
+        + input('f-ctr', 'ctr', 'CTR (%)', '1,5') + input('f-cvr', 'cvr', 'Tỷ lệ click thành lead (%)', '5') + '</div>'
+        + outs([['impressions', 'Lượt hiển thị'], ['clicks', 'Lượt click'], ['cpc', 'CPC'], ['cpl', 'CPL'], ['leads', 'Số lead', true]]) + '</section>'
+        + '<section class="calc" data-calc="vat" aria-live="polite"><h2>Tách hoặc cộng VAT</h2><p>Dùng khi hóa đơn ghi giá đã gồm thuế hoặc khi cần báo giá có VAT.</p><div class="grid">'
+        + input('v-amount', 'amount', 'Số tiền', '11.000.000')
+        + `<div><label for="v-rate">Thuế suất VAT</label>${selectBox(Object.fromEntries(VAT_RATES.map(r => [r, r + '%'])), 10, 'id="v-rate" data-in="rate"')}</div>`
+        + '<label class="check wide"><input type="checkbox" data-in="inclusive" checked> Số tiền đã gồm VAT</label></div>'
+        + outs([['net', 'Trước thuế'], ['vat', 'VAT'], ['total', 'Tổng tiền', true]]) + '</section>'
+        + '</div>';
+};
+
+const CALCS = {
+    roas(i) {
+        const margin = i.margin / 100, profit = i.revenue * margin - i.spend;
+        return { roas: fmt.times(M.div(i.revenue, i.spend)), breakeven: fmt.times(M.div(1, margin)), profit: signed(profit),
+            verdict: Math.abs(profit) < 1 ? 'Hòa vốn' : (profit > 0 ? '<span class="pos">Có lãi</span>' : '<span class="neg">Đang lỗ</span>') };
+    },
+    plan(i) {
+        const p = M.plan(i.target, i.aov, i.close / 100, i.cpl);
+        return { orders: fmt.num(p.orders), leads: fmt.num(p.leads), budget: fmt.money(p.budget), cpa: fmt.money(p.cpa), roas: fmt.times(p.roas) };
+    },
+    funnel(i) {
+        const imp = i.cpm > 0 ? i.budget / i.cpm * 1000 : null;
+        const clicks = imp == null ? null : imp * i.ctr / 100;
+        const leads = clicks == null ? null : clicks * i.cvr / 100;
+        return { impressions: fmt.num(imp), clicks: fmt.num(clicks), cpc: fmt.money(clicks ? i.budget / clicks : null), leads: fmt.num(leads), cpl: fmt.money(leads ? i.budget / leads : null) };
+    },
+    vat(i) {
+        const s = M.splitVat(i.amount, i.rate, i.inclusive);
+        return { net: fmt.money(s.net), vat: fmt.money(s.vat), total: fmt.money(s.total) };
+    },
+};
+
+function runCalc(box) {
+    const input = {};
+    $$('[data-in]', box).forEach(el => { input[el.dataset.in] = el.type === 'checkbox' ? el.checked : parseNum(el.value); });
+    const out = CALCS[box.dataset.calc](input);
+    Object.entries(out).forEach(([k, v]) => { const el = $(`[data-out="${k}"]`, box); if (el) { el.innerHTML = v; } });
+}
+
+function quickPeriods(path, cur) {
+    const y = thisYear(), m = new Date().getMonth() + 1, q = Math.ceil(m / 3);
+    const lm = new Date(y, m - 2, 1);
+    const periods = [
+        ['Tháng này', today().slice(0, 8) + '01', monthEnd(y, m)],
+        ['Tháng trước', ymd(lm), monthEnd(lm.getFullYear(), lm.getMonth() + 1)],
+        ['Quý này', y + '-' + pad((q - 1) * 3 + 1) + '-01', monthEnd(y, q * 3)],
+        ['Năm nay', y + '-01-01', y + '-12-31'],
+        ['Năm trước', (y - 1) + '-01-01', (y - 1) + '-12-31'],
+    ];
+    return '<div class="chips">' + periods.map(([t, a, b]) => `<button type="button" class="chip" data-act="period" data-path="${path}" data-from="${a}" data-to="${b}" aria-pressed="${cur.from === a && cur.to === b}">${t}</button>`).join('') + '</div>';
+}
+
+function categoryOptions(type) {
+    return Object.fromEntries(db.categories.filter(c => !type || c.type === type)
+        .sort((a, b) => a.type.localeCompare(b.type) || a.sort_order - b.sort_order || a.name.localeCompare(b.name, 'vi')).map(c => [c.id, c.name]));
+}
+
+VIEWS.ledger = () => {
+    const f = ui.ledger;
+    const book = cashBook(f.from, f.to, f);
+    const s = book.summary;
+    const names = campaignNames();
+    let html = pageHead('Sổ thu chi', 'Mỗi dòng là một khoản thực thu hoặc thực chi qua tiền mặt hay ngân hàng. VAT được tách riêng để làm báo cáo thuế.',
+        addBtn('txn', 'Ghi khoản thu', 'data-type="income"') + addBtn('txn', 'Ghi khoản chi', 'data-type="expense"') + exportBtn('ledger'));
+    html += `<div class="toolbar"><div><label for="l-from">Từ ngày</label><input type="date" id="l-from" data-filter="ledger.from" value="${f.from}"></div>`
+        + `<div><label for="l-to">Đến ngày</label><input type="date" id="l-to" data-filter="ledger.to" value="${f.to}"></div>`
+        + filterSelect('l-type', 'Loại', 'ledger.type', OPT.type, f.type)
+        + filterSelect('l-cat', 'Hạng mục', 'ledger.category', categoryOptions(f.type), f.category)
+        + filterSelect('l-method', 'Hình thức', 'ledger.method', OPT.method, f.method)
+        + filterSelect('l-camp', 'Chiến dịch', 'ledger.campaign', names, f.campaign) + '</div>' + quickPeriods('ledger', f);
+
+    html += '<div class="tallies" style="margin-bottom:22px">'
+        + tally([['Số dư đầu kỳ', fmt.money(book.opening.total), { note: `Tiền mặt ${fmt.money(book.opening.cash)}, ngân hàng ${fmt.money(book.opening.bank)}` }],
+            ['Tổng thu', `<span class="pos">${fmt.money(s.cash_in)}</span>`, { note: 'trong đó VAT ' + fmt.money(s.vat_out) }],
+            ['Tổng chi', `<span class="neg">${fmt.money(s.cash_out)}</span>`, { note: 'trong đó VAT ' + fmt.money(s.vat_in) }],
+            ['Số dư cuối kỳ', signed(book.closing.total), { total: true, note: `Tiền mặt ${fmt.money(book.closing.cash)}, ngân hàng ${fmt.money(book.closing.bank)}` }]])
+        + '</div>';
+    if (book.filtered) { html += '<p class="hint" style="margin-bottom:14px">Đang lọc nên không hiện cột số dư. Tổng thu, tổng chi tính theo bộ lọc; số dư đầu và cuối kỳ vẫn tính trên toàn bộ sổ.</p>'; }
+
+    if (!book.rows.length) {
+        return html + emptyBlock('Chưa có khoản nào trong kỳ này', db.transactions.length ? 'Đổi khoảng ngày hoặc bộ lọc để xem các khoản khác.'
+            : 'Vào trang Thiết lập để nhập số dư tiền mặt và ngân hàng ban đầu, rồi ghi khoản thu chi đầu tiên.',
+            addBtn('txn', 'Ghi khoản thu', 'data-type="income"') + addBtn('txn', 'Ghi khoản chi', 'data-type="expense"'));
+    }
+    html += '<div class="scroll"><table class="book ruled"><thead><tr><th>Ngày</th><th>Số CT</th><th>Diễn giải</th><th>Hạng mục</th>'
+        + '<th class="num">Thu</th><th class="num">Chi</th><th class="num">VAT</th>' + (book.filtered ? '' : '<th class="num">Số dư</th>')
+        + '<th>Hình thức</th><th><span class="sr-only">Thao tác</span></th></tr></thead><tbody>';
+    html += book.rows.map(t => `<tr><td>${fmt.date(t.txn_date)}</td><td>${h(t.doc_no)}</td>`
+        + `<td>${h(t.description) || '<span class="muted">—</span>'}${t.counterparty ? `<span class="sub">${h(t.counterparty)}</span>` : ''}`
+        + (t.campaign_id && names[t.campaign_id] ? `<span class="sub">Chiến dịch: ${h(names[t.campaign_id])}</span>` : '') + '</td>'
+        + `<td>${h(t.category_name)}<span class="sub">${h(t.account_code)}</span></td>`
+        + `<td class="num pos">${t.type === 'income' ? fmt.money(t.total) : ''}</td><td class="num neg">${t.type === 'expense' ? fmt.money(t.total) : ''}</td>`
+        + `<td class="num muted">${Number(t.vat_amount) > 0 ? fmt.money(t.vat_amount) + `<span class="sub">${t.vat_rate}%</span>` : ''}</td>`
+        + (book.filtered ? '' : `<td class="num">${signed(t.balance)}</td>`)
+        + `<td>${h(label('method', t.method))}</td>` + rowActions('txn', t.id) + '</tr>').join('');
+    html += `</tbody><tfoot><tr><td colspan="4">Cộng phát sinh (${s.count} khoản)</td><td class="num">${fmt.money(s.cash_in)}</td><td class="num">${fmt.money(s.cash_out)}</td>`
+        + `<td class="num">${fmt.money(s.vat_out + s.vat_in)}</td>` + (book.filtered ? '' : `<td class="num">${signed(book.closing.total)}</td>`) + '<td colspan="2"></td></tr></tfoot></table></div>';
+    return html;
+};
+
+VIEWS.reports = () => {
+    const r = yearReport(ui.reportYear);
+    const s = r.summary;
+    let html = pageHead('Báo cáo tài chính', 'Lãi lỗ theo tháng, VAT theo quý, tồn quỹ và cơ cấu chi phí, tính từ Sổ thu chi.',
+        `<div><label for="r-year">Năm</label>${selectBox(yearOptions(), r.year, 'id="r-year" data-filter="reportYear"')}</div>`
+        + `<button type="button" class="btn" data-act="export" data-what="ledger-year">${ICON.down}Xuất sổ cả năm</button>`);
+    html += '<div class="tallies">'
+        + tally([['Doanh thu (trước VAT)', fmt.money(s.income)], ['Chi phí (trước VAT)', fmt.money(s.expense)],
+            ['Lợi nhuận', signed(s.profit), { total: true, note: 'Biên lợi nhuận ' + fmt.pct(s.margin) }]])
+        + tally([['Chi phí marketing', fmt.money(r.marketing.spend), { note: fmt.pct(r.marketing.share_of_revenue) + ' doanh thu, ' + fmt.pct(r.marketing.share_of_costs) + ' tổng chi phí' }],
+            ['VAT đầu ra', fmt.money(s.vat_out)], ['VAT đầu vào', fmt.money(s.vat_in)],
+            ['VAT phải nộp cả năm (tạm tính)', fmt.money(s.vat_payable), { total: true }]])
+        + '</div>';
+    if (!s.count) {
+        return html + '<p class="muted" style="margin-top:20px">Năm ' + r.year + ' chưa có khoản thu chi nào. <a href="#ledger">Mở Sổ thu chi</a></p>';
+    }
+    html += '<h2>Theo tháng</h2>' + monthChart(r.monthly);
+    html += '<div class="scroll"><table class="book"><thead><tr><th>Tháng</th><th class="num">Doanh thu</th><th class="num">Chi phí</th><th class="num">Lợi nhuận</th><th class="num">VAT đầu ra</th><th class="num">VAT đầu vào</th></tr></thead><tbody>'
+        + r.monthly.map((m, i) => `<tr${m.count ? '' : ' class="muted"'}><td><button type="button" class="btn-link btn" data-act="open-month" data-month="${r.year}-${pad(i + 1)}">Tháng ${i + 1}</button></td>`
+            + `<td class="num">${fmt.money(m.income)}</td><td class="num">${fmt.money(m.expense)}</td><td class="num">${signed(m.profit)}</td>`
+            + `<td class="num">${fmt.money(m.vat_out)}</td><td class="num">${fmt.money(m.vat_in)}</td></tr>`).join('')
+        + `</tbody><tfoot><tr><td>Cả năm</td><td class="num">${fmt.money(s.income)}</td><td class="num">${fmt.money(s.expense)}</td><td class="num">${signed(s.profit)}</td>`
+        + `<td class="num">${fmt.money(s.vat_out)}</td><td class="num">${fmt.money(s.vat_in)}</td></tr></tfoot></table></div>`;
+
+    html += '<div class="split"><section><h2>VAT theo quý</h2><div class="scroll"><table class="book"><thead><tr><th>Quý</th><th class="num">Đầu ra</th><th class="num">Đầu vào</th><th class="num">Phải nộp</th><th class="num">Còn khấu trừ</th></tr></thead><tbody>'
+        + r.quarterly.map((q, i) => `<tr><td>Quý ${i + 1}</td><td class="num">${fmt.money(q.vat_out)}</td><td class="num">${fmt.money(q.vat_in)}</td><td class="num"><b>${fmt.money(q.vat_payable)}</b></td><td class="num">${fmt.money(q.vat_carry)}</td></tr>`).join('')
+        + '</tbody></table></div><p class="hint">Số tạm tính để chuẩn bị tờ khai, chưa trừ số thuế còn được khấu trừ chuyển từ kỳ trước và chưa loại hóa đơn không đủ điều kiện khấu trừ.</p></section>'
+        + '<section><h2>Tiền mặt và ngân hàng</h2><div class="scroll"><table class="book"><thead><tr><th></th><th class="num">Tiền mặt</th><th class="num">Ngân hàng</th></tr></thead><tbody>'
+        + `<tr><td>Đầu năm</td><td class="num">${signed(r.opening.cash)}</td><td class="num">${signed(r.opening.bank)}</td></tr>`
+        + `<tr><td>Thu trừ chi trong năm</td><td class="num">${signed(r.movement.cash)}</td><td class="num">${signed(r.movement.bank)}</td></tr></tbody>`
+        + `<tfoot><tr><td>Cuối năm</td><td class="num">${signed(r.closing.cash)}</td><td class="num">${signed(r.closing.bank)}</td></tr></tfoot></table></div>`
+        + (r.closing.cash < 0 ? '<p class="hint neg">Tồn quỹ tiền mặt bị âm: kiểm tra số dư đầu kỳ ở trang Thiết lập hoặc các khoản chi tiền mặt.</p>' : '')
+        + '</section></div>';
+
+    html += '<div class="split">' + [['income', 'Cơ cấu doanh thu', s.income], ['expense', 'Cơ cấu chi phí', s.expense]].map(([k, title, total]) =>
+        `<section><h2>${title}</h2>` + (r.categories[k].length
+            ? '<div class="scroll"><table class="book"><thead><tr><th>Hạng mục</th><th>Số TK</th><th class="num">Trước VAT</th><th class="num">Tỷ trọng</th></tr></thead><tbody>'
+                + r.categories[k].map(c => `<tr><td>${h(c.name)}${c.is_marketing ? ' <span class="tag">Marketing</span>' : ''}</td><td>${h(c.account_code)}</td><td class="num">${fmt.money(c.net)}</td><td class="num">${fmt.pct(M.div(c.net, total))}</td></tr>`).join('')
+                + '</tbody></table></div>'
+            : '<p class="muted">Không có khoản nào.</p>') + '</section>').join('') + '</div>';
+    return html;
+};
+
+VIEWS.journal = () => {
+    const f = ui.journal;
+    const j = journal(f.from, f.to);
+    const tb = j.trial;
+    const balanced = Math.abs(tb.debit - tb.credit) < 0.01;
+    let html = pageHead('Nhật ký chung', 'Bút toán Nợ / Có tự sinh từ Sổ thu chi theo số tài khoản của từng hạng mục. Thu: Nợ 111/112, Có doanh thu, Có VAT đầu ra. Chi: Nợ chi phí, Nợ VAT đầu vào, Có 111/112.',
+        exportBtn('journal'));
+    html += `<div class="toolbar"><div><label for="j-from">Từ ngày</label><input type="date" id="j-from" data-filter="journal.from" value="${f.from}"></div>`
+        + `<div><label for="j-to">Đến ngày</label><input type="date" id="j-to" data-filter="journal.to" value="${f.to}"></div></div>` + quickPeriods('journal', f);
+    if (!j.lines.length) { return html + '<p class="muted">Kỳ này chưa có bút toán. <a href="#ledger">Mở Sổ thu chi</a></p>'; }
+
+    html += '<div class="stamp-wrap">'
+        + tally([['Tổng phát sinh Nợ', fmt.money(tb.debit)], ['Tổng phát sinh Có', fmt.money(tb.credit), { total: true }]])
+        + (balanced ? '<div class="stamp land" role="img" aria-label="Đã cân: tổng Nợ bằng tổng Có"><b>ĐÃ CÂN</b><small>Nợ = Có</small></div>'
+            : '<div class="stamp" role="img" aria-label="Lệch: tổng Nợ khác tổng Có"><b>LỆCH</b><small>Nợ ≠ Có</small></div>')
+        + '</div>';
+    html += '<h2>Bảng cân đối số phát sinh</h2><div class="scroll"><table class="book"><thead><tr><th>Tài khoản</th><th class="num">Phát sinh Nợ</th><th class="num">Phát sinh Có</th><th class="num">Chênh lệch</th></tr></thead><tbody>'
+        + tb.accounts.map(a => {
+            const net = round2(a.debit - a.credit);
+            return `<tr><td><b>${h(a.code)}</b></td><td class="num">${a.debit ? fmt.money(a.debit) : ''}</td><td class="num">${a.credit ? fmt.money(a.credit) : ''}</td>`
+                + `<td class="num">${Math.abs(net) >= 0.01 ? fmt.money(Math.abs(net)) + ` <span class="muted small">${net > 0 ? 'Nợ' : 'Có'}</span>` : ''}</td></tr>`;
+        }).join('')
+        + `</tbody><tfoot><tr><td>Tổng cộng</td><td class="num">${fmt.money(tb.debit)}</td><td class="num">${fmt.money(tb.credit)}</td><td></td></tr></tfoot></table></div>`
+        + '<p class="hint">Chỉ gồm phát sinh trong kỳ, chưa gồm số dư đầu kỳ của các tài khoản.</p>';
+    let prev = null;
+    html += `<h2>Bút toán (${j.lines.length} dòng)</h2><div class="scroll"><table class="book ruled"><thead><tr><th>Ngày</th><th>Số CT</th><th>Diễn giải</th><th>Tài khoản</th><th class="num">Nợ</th><th class="num">Có</th></tr></thead><tbody>`
+        + j.lines.map((l, i) => {
+            const first = l.txn_id !== prev; prev = l.txn_id;
+            return `<tr class="${first && i ? 'group-start' : ''}"><td>${first ? fmt.date(l.date) : ''}</td><td>${first ? h(l.doc_no) : ''}</td><td>${first ? h(l.description) : ''}</td>`
+                + `<td class="${l.credit ? 'indent' : ''}">${h(l.account)}</td><td class="num">${l.debit ? fmt.money(l.debit) : ''}</td><td class="num">${l.credit ? fmt.money(l.credit) : ''}</td></tr>`;
+        }).join('') + '</tbody></table></div>';
+    return html;
+};
+
+VIEWS.setup = () => {
+    const st = db.settings;
+    const counts = COLLECTIONS.map(k => db[k].length);
+    const hasSample = COLLECTIONS.some(k => db[k].some(x => x.sample));
+    const used = new Set(db.transactions.map(t => t.category_id));
+    let html = pageHead('Thiết lập', 'Sao lưu dữ liệu, số dư ban đầu, số tài khoản kế toán và hạng mục thu chi.');
+
+    html += '<h2 style="margin-top:8px">Dữ liệu của bạn</h2>'
+        + `<p class="muted" style="max-width:70ch">Dữ liệu chỉ nằm trong trình duyệt này, trên thiết bị này: ${counts[1]} chiến dịch, ${counts[2]} nội dung, ${counts[3]} lead, ${counts[4]} khoản thu chi. `
+        + 'Xóa lịch sử duyệt web hoặc đổi máy sẽ mất dữ liệu, vì vậy hãy tải file sao lưu thường xuyên. Mở file sao lưu ở máy khác để chuyển dữ liệu sang.</p>'
+        + `<p class="muted small">Lần sao lưu gần nhất: ${db.meta.last_backup ? new Date(db.meta.last_backup).toLocaleString('vi-VN') : 'chưa có'}</p>`
+        + '<div class="page-actions" style="margin-bottom:8px">'
+        + `<button type="button" class="btn btn-primary" data-act="backup">${ICON.down}Tải file sao lưu</button>`
+        + '<button type="button" class="btn" data-act="restore">Mở file sao lưu</button>'
+        + (hasSample ? '<button type="button" class="btn" data-act="clear-sample">Xóa dữ liệu mẫu</button>' : '<button type="button" class="btn" data-act="sample">Tạo dữ liệu mẫu</button>')
+        + '<button type="button" class="btn btn-link is-danger" data-act="wipe">Xóa toàn bộ dữ liệu</button></div>';
+
+    html += '<h2>Số dư ban đầu và tài khoản mặc định</h2>'
+        + '<form id="setup-form" novalidate><div class="grid">'
+        + `<div><label for="s-cash">Tồn quỹ tiền mặt ban đầu</label><input type="text" inputmode="decimal" id="s-cash" name="opening_cash" value="${fmt.input(st.opening_cash)}" placeholder="0"></div>`
+        + `<div><label for="s-bank">Số dư ngân hàng ban đầu</label><input type="text" inputmode="decimal" id="s-bank" name="opening_bank" value="${fmt.input(st.opening_bank)}" placeholder="0"></div>`
+        + Object.keys(ACCOUNT_DEFAULTS).map(k => `<div><label for="s-acc-${k}">${ACCOUNT_LABELS[k]}</label><input type="text" id="s-acc-${k}" name="account_${k}" value="${h(st.accounts[k])}" maxlength="20"></div>`).join('')
+        + '</div><div class="errors" id="setup-errors" role="alert"></div>'
+        + '<p class="hint">Số dư ban đầu là số tiền có tại thời điểm trước khoản thu chi đầu tiên trong sổ. Số tài khoản theo hệ thống tài khoản kế toán Việt Nam phổ biến; nhờ kế toán kiểm tra cho đúng chế độ doanh nghiệp đang áp dụng.</p>'
+        + '<div class="page-actions" style="margin-top:12px"><button type="submit" class="btn btn-primary">Lưu thiết lập</button></div></form>';
+
+    html += '<div class="page-head" style="margin:36px 0 12px"><h2 style="margin:0">Hạng mục thu chi</h2>' + addBtn('category', 'Thêm hạng mục') + '</div>'
+        + '<div class="scroll"><table class="book"><thead><tr><th>Tên</th><th>Loại</th><th>Số TK</th><th>Chi phí marketing</th><th><span class="sr-only">Thao tác</span></th></tr></thead><tbody>'
+        + [...db.categories].sort((a, b) => b.type.localeCompare(a.type) || a.sort_order - b.sort_order).map(c => `<tr><td>${h(c.name)}${used.has(c.id) ? '<span class="sub">Đang có bút toán</span>' : ''}</td>`
+            + `<td>${h(label('type', c.type))}</td><td>${h(c.account_code) || `<span class="muted">mặc định ${h(c.type === 'income' ? st.accounts.income_default : st.accounts.expense_default)}</span>`}</td>`
+            + `<td>${c.is_marketing ? 'Có' : ''}</td>` + rowActions('category', c.id) + '</tr>').join('')
+        + '</tbody></table></div><p class="hint">Đánh dấu "Chi phí marketing" để báo cáo tính tỷ lệ chi marketing trên doanh thu. Hạng mục để trống số TK sẽ dùng tài khoản mặc định.</p>';
+    return html;
+};
+
+/* ---------------------------------------------------------------- forms */
+
+const money = (name, labelText, value) => ({ name, label: labelText, type: 'money', value });
+const count = (name, labelText, value) => ({ name, label: labelText, type: 'int', value });
+
+const KINDS = {
+    campaign: {
+        list: 'campaigns', noun: 'chiến dịch', save: saveCampaign,
+        defaults: () => ({ channel: 'facebook', objective: 'sales', status: 'planned', start_date: today() }),
+        fields: r => [
+            { name: 'name', label: 'Tên chiến dịch *', type: 'text', value: r.name, wide: true, placeholder: 'VD: Sale Tết - Facebook' },
+            { name: 'channel', label: 'Kênh', type: 'select', options: OPT.channel, value: r.channel },
+            { name: 'objective', label: 'Mục tiêu', type: 'select', options: OPT.objective, value: r.objective },
+            { name: 'status', label: 'Trạng thái', type: 'select', options: OPT.campaign_status, value: r.status },
+            { name: 'owner', label: 'Người phụ trách', type: 'text', value: r.owner },
+            { name: 'start_date', label: 'Ngày bắt đầu', type: 'date', value: r.start_date },
+            { name: 'end_date', label: 'Ngày kết thúc', type: 'date', value: r.end_date },
+            money('budget', 'Ngân sách', r.budget), money('spend', 'Đã chi', r.spend),
+            count('impressions', 'Lượt hiển thị', r.impressions), count('clicks', 'Lượt click', r.clicks),
+            count('leads', 'Leads', r.leads), count('conversions', 'Đơn hàng', r.conversions),
+            money('revenue', 'Doanh thu', r.revenue),
+            { name: 'notes', label: 'Ghi chú', type: 'textarea', value: r.notes, wide: true },
+        ],
+        hint: 'Lấy số liệu từ trình quản lý quảng cáo. Gõ 1500000 hoặc 1.500.000 đều được.',
+    },
+    content: {
+        list: 'content', noun: 'nội dung', save: saveContent,
+        defaults: () => ({ channel: 'facebook', format: 'post', status: 'idea', publish_date: '' }),
+        fields: r => [
+            { name: 'title', label: 'Tiêu đề *', type: 'text', value: r.title, wide: true },
+            { name: 'channel', label: 'Kênh', type: 'select', options: OPT.channel, value: r.channel },
+            { name: 'format', label: 'Định dạng', type: 'select', options: OPT.format, value: r.format },
+            { name: 'publish_date', label: 'Ngày đăng', type: 'date', value: r.publish_date },
+            { name: 'status', label: 'Trạng thái', type: 'select', options: OPT.content_status, value: r.status },
+            { name: 'campaign_id', label: 'Chiến dịch', type: 'select', options: campaignNames(), value: r.campaign_id, empty: 'Không gắn' },
+            { name: 'assignee', label: 'Người phụ trách', type: 'text', value: r.assignee },
+            { name: 'url', label: 'Link bài đăng', type: 'url', value: r.url, wide: true, placeholder: 'https://' },
+            { name: 'notes', label: 'Ghi chú', type: 'textarea', value: r.notes, wide: true },
+        ],
+        hint: 'Để trống ngày đăng để lưu thành ý tưởng.',
+    },
+    lead: {
+        list: 'leads', noun: 'lead', save: saveLead,
+        defaults: () => ({ source: 'facebook', stage: 'new' }),
+        fields: r => [
+            { name: 'name', label: 'Tên khách *', type: 'text', value: r.name },
+            { name: 'company', label: 'Công ty', type: 'text', value: r.company },
+            { name: 'phone', label: 'Điện thoại', type: 'tel', value: r.phone },
+            { name: 'email', label: 'Email', type: 'email', value: r.email },
+            { name: 'campaign_id', label: 'Chiến dịch', type: 'select', options: campaignNames(), value: r.campaign_id, empty: 'Không gắn' },
+            { name: 'source', label: 'Nguồn', type: 'select', options: OPT.channel, value: r.source },
+            { name: 'stage', label: 'Giai đoạn', type: 'select', options: OPT.stage, value: r.stage },
+            money('value', 'Giá trị dự kiến', r.value),
+            { name: 'assignee', label: 'Người phụ trách', type: 'text', value: r.assignee },
+            { name: 'notes', label: 'Ghi chú', type: 'textarea', value: r.notes, wide: true },
+        ],
+    },
+    txn: {
+        list: 'transactions', noun: 'khoản thu chi', save: saveTxn,
+        defaults: () => ({ type: 'expense', txn_date: today(), vat_rate: 0, method: 'bank' }),
+        fields: r => [
+            { name: 'type', label: 'Loại', type: 'radio', options: OPT.type, value: r.type },
+            { name: 'txn_date', label: 'Ngày *', type: 'date', value: r.txn_date },
+            { name: 'category_id', label: 'Hạng mục *', type: 'catselect', value: r.category_id },
+            { name: 'doc_no', label: 'Số chứng từ', type: 'text', value: r.doc_no, placeholder: 'PT001, PC015, số hóa đơn' },
+            money('amount', 'Số tiền *', r.amount),
+            { name: 'vat_rate', label: 'Thuế suất VAT', type: 'select', options: Object.fromEntries(VAT_RATES.map(v => [v, v + '%'])), value: r.vat_rate },
+            { name: 'vat_inclusive', label: 'Số tiền đã gồm VAT', type: 'check', value: false },
+            { name: 'method', label: 'Hình thức', type: 'select', options: OPT.method, value: r.method },
+            { name: 'counterparty', label: 'Khách hàng / nhà cung cấp', type: 'text', value: r.counterparty },
+            { name: 'campaign_id', label: 'Chiến dịch (khoản chi)', type: 'select', options: campaignNames(), value: r.campaign_id, empty: 'Không gắn' },
+            { name: 'description', label: 'Diễn giải', type: 'text', value: r.description, wide: true },
+        ],
+        hint: 'Khi sửa một khoản cũ, ô Số tiền hiện số trước thuế. Gắn chiến dịch cho khoản chi quảng cáo để đối soát với số chi trên nền tảng.',
+        preview: true,
+    },
+    category: {
+        list: 'categories', noun: 'hạng mục', save: saveCategory,
+        defaults: () => ({ type: 'expense', is_marketing: false }),
+        fields: r => [
+            { name: 'name', label: 'Tên hạng mục *', type: 'text', value: r.name, wide: true },
+            { name: 'type', label: 'Loại', type: 'select', options: OPT.type, value: r.type },
+            { name: 'account_code', label: 'Số TK', type: 'text', value: r.account_code, placeholder: 'VD: 6417' },
+            { name: 'sort_order', label: 'Thứ tự', type: 'int', value: r.sort_order },
+            { name: 'is_marketing', label: 'Là chi phí marketing', type: 'check', value: r.is_marketing },
+        ],
+    },
+};
+
+function field(f) {
+    const id = 'fld-' + f.name;
+    const cls = f.wide ? ' class="wide"' : '';
+    const v = f.value == null ? '' : f.value;
+    switch (f.type) {
+        case 'select':
+            return `<div${cls}><label for="${id}">${h(f.label)}</label>${selectBox(f.options, v, `id="${id}" name="${f.name}"`, f.empty == null ? null : f.empty)}</div>`;
+        case 'catselect': {
+            const groups = ['income', 'expense'].map(t => `<optgroup label="${h(label('type', t))}" data-type="${t}">`
+                + Object.entries(categoryOptions(t)).map(([cid, name]) => `<option value="${cid}"${String(v) === cid ? ' selected' : ''}>${h(name)}</option>`).join('') + '</optgroup>').join('');
+            return `<div${cls}><label for="${id}">${h(f.label)}</label><select id="${id}" name="${f.name}"><option value="">Chọn hạng mục</option>${groups}</select></div>`;
+        }
+        case 'textarea':
+            return `<div${cls}><label for="${id}">${h(f.label)}</label><textarea id="${id}" name="${f.name}" rows="2">${h(v)}</textarea></div>`;
+        case 'check':
+            return `<label class="check${f.wide ? ' wide' : ''}" style="padding-top:22px"><input type="checkbox" id="${id}" name="${f.name}"${v ? ' checked' : ''}> ${h(f.label)}</label>`;
+        case 'radio':
+            return `<div${cls}><span class="label" id="${id}-label">${h(f.label)}</span><div class="radio-row" role="radiogroup" aria-labelledby="${id}-label">`
+                + Object.entries(f.options).map(([k, t]) => `<label class="check"><input type="radio" name="${f.name}" value="${k}"${String(v) === k ? ' checked' : ''}> ${h(t)}</label>`).join('')
+                + '</div></div>';
+        case 'money':
+        case 'int':
+            return `<div${cls}><label for="${id}">${h(f.label)}</label><input type="text" inputmode="${f.type === 'int' ? 'numeric' : 'decimal'}" id="${id}" name="${f.name}" value="${h(fmt.input(v))}" placeholder="0" autocomplete="off"></div>`;
+        default:
+            return `<div${cls}><label for="${id}">${h(f.label)}</label><input type="${f.type}" id="${id}" name="${f.name}" value="${h(v)}"${f.placeholder ? ` placeholder="${h(f.placeholder)}"` : ''}></div>`;
+    }
+}
+
+let current = null;
+const dlg = $('#dlg');
+
+function openForm(kind, id, preset = {}) {
+    const K = KINDS[kind];
+    const rec = id ? byId(db[K.list], id) : null;
+    if (id && !rec) { toast('Không tìm thấy mục này, có thể đã bị xóa.'); return; }
+    current = { kind, id: rec ? rec.id : null };
+    $('#dlg-title').textContent = (rec ? 'Sửa ' : 'Thêm ') + K.noun;
+    $('#dlg-errors').innerHTML = '';
+    $('#dlg-fields').innerHTML = '<div class="grid">' + K.fields(rec ? { ...rec } : { ...K.defaults(), ...preset }).map(field).join('') + '</div>'
+        + (K.preview ? '<p class="preview" id="dlg-preview" aria-live="polite"></p>' : '')
+        + (K.hint ? `<p class="hint">${h(K.hint)}</p>` : '');
+    $('#dlg-foot').innerHTML = `<button type="submit" class="btn btn-primary">Lưu ${h(K.noun)}</button><button type="button" class="btn" data-act="close-dialog">Hủy</button><span class="spacer"></span>`
+        + (rec ? `<button type="button" class="btn btn-link is-danger" data-act="delete" data-kind="${kind}" data-id="${rec.id}">Xóa ${h(K.noun)}</button>` : '');
+    if (typeof dlg.showModal === 'function') { if (!dlg.open) { dlg.showModal(); } } else { dlg.setAttribute('open', ''); }
+    if (kind === 'txn') { syncTxnForm(); }
+    const first = $('#dlg-fields input:not([type=radio]):not([type=checkbox]), #dlg-fields select');
+    if (first) { first.focus(); }
+}
+
+function closeDialog() {
+    if (typeof dlg.close === 'function' && dlg.open) { dlg.close(); } else { dlg.removeAttribute('open'); }
+    current = null;
+}
+
+function formValues(form) {
+    const data = {};
+    Array.from(form.elements).forEach(el => {
+        if (!el.name) { return; }
+        if (el.type === 'checkbox') { data[el.name] = el.checked; }
+        else if (el.type === 'radio') { if (el.checked) { data[el.name] = el.value; } }
+        else { data[el.name] = el.value; }
+    });
+    return data;
+}
+
+/** Only categories of the chosen type are selectable; campaigns apply to expenses only; live VAT preview. */
+function syncTxnForm() {
+    const form = $('#dlg-form');
+    const type = (form.querySelector('input[name="type"]:checked') || {}).value || 'expense';
+    const cat = $('#fld-category_id');
+    $$('optgroup', cat).forEach(g => {
+        const on = g.dataset.type === type;
+        g.hidden = !on;
+        $$('option', g).forEach(o => { o.disabled = !on; });
+    });
+    if (cat.selectedOptions.length && cat.selectedOptions[0].disabled) { cat.value = ''; }
+    $('#fld-campaign_id').closest('div').style.display = type === 'expense' ? '' : 'none';
+    const amount = parseNum($('#fld-amount').value);
+    const s = M.splitVat(amount, Number($('#fld-vat_rate').value), $('#fld-vat_inclusive').checked);
+    $('#dlg-preview').textContent = amount > 0 ? `Trước thuế ${fmt.money(s.net)}   |   VAT ${fmt.money(s.vat)}   |   Tổng ${fmt.money(s.total)}` : '';
+}
+
+$('#dlg-form').addEventListener('submit', e => {
+    e.preventDefault();
+    if (!current) { return; }
+    const K = KINDS[current.kind];
+    const res = K.save(formValues(e.target), current.id);
+    if (!res.ok) {
+        $('#dlg-errors').innerHTML = res.errors.map(h).join('<br>');
+        const box = $('#dlg-errors');
+        if (box.scrollIntoView) { box.scrollIntoView({ block: 'nearest' }); }
+        return;
+    }
+    const rec = res.rec, wasEdit = !!current.id;
+    // Keep the saved record in view.
+    if (current.kind === 'content' && rec.publish_date) { ui.month = rec.publish_date.slice(0, 7); }
+    if (current.kind === 'txn' && (rec.txn_date < ui.ledger.from || rec.txn_date > ui.ledger.to)) {
+        const [y, m] = rec.txn_date.split('-').map(Number);
+        ui.ledger.from = rec.txn_date.slice(0, 8) + '01'; ui.ledger.to = monthEnd(y, m);
+    }
+    if (current.kind === 'campaign' && !activeInYear(rec, ui.camp.year) && rec.start_date) { ui.camp.year = Number(rec.start_date.slice(0, 4)); }
+    closeDialog();
+    toast((wasEdit ? 'Đã lưu ' : 'Đã thêm ') + K.noun + '.');
+    render();
+});
+
+dlg.addEventListener('input', () => { if (current && current.kind === 'txn') { syncTxnForm(); } });
+dlg.addEventListener('change', () => { if (current && current.kind === 'txn') { syncTxnForm(); } });
+dlg.addEventListener('close', () => { current = null; });
+
+/* ---------------------------------------------------------------- sample data */
+
+function addSample() {
+    const y = thisYear(), t = today();
+    const clamp = v => (v < y + '-01-01' ? y + '-01-01' : v > y + '-12-31' ? y + '-12-31' : v);
+    const d = n => clamp(addDays(t, n));
+    const ids = {};
+    const zero = { impressions: 0, clicks: 0, leads: 0, conversions: 0, revenue: 0, spend: 0 };
+    [
+        ['fb', { name: 'Sale cuối mùa - Facebook', channel: 'facebook', objective: 'sales', status: 'running', start_date: d(-40), end_date: d(20), budget: 30e6, spend: 18.5e6, impressions: 920000, clicks: 14200, leads: 410, conversions: 52, revenue: 74.6e6, owner: 'Bảo' }],
+        ['gg', { name: 'Google Search - từ khóa thương hiệu', channel: 'google', objective: 'leads', status: 'running', start_date: d(-60), end_date: null, budget: 15e6, spend: 9.8e6, impressions: 61000, clicks: 4900, leads: 180, conversions: 31, revenue: 46.5e6, owner: 'Lan' }],
+        ['tt', { name: 'TikTok video sản phẩm mới', channel: 'tiktok', objective: 'awareness', status: 'paused', start_date: d(-30), end_date: d(-5), budget: 12e6, spend: 7.2e6, impressions: 1350000, clicks: 9800, leads: 95, conversions: 6, revenue: 5.4e6, owner: 'Bảo' }],
+        ['em', { name: 'Email chăm sóc khách cũ', channel: 'email', objective: 'retention', status: 'done', start_date: d(-75), end_date: d(-45), budget: 2e6, spend: 1.5e6, impressions: 8400, clicks: 1100, leads: 60, conversions: 24, revenue: 19.2e6, owner: 'Lan' }],
+        ['kol', { ...zero, name: 'KOL review sản phẩm', channel: 'kol', objective: 'awareness', status: 'planned', start_date: d(10), end_date: d(40), budget: 25e6, owner: 'Bảo' }],
+    ].forEach(([key, c]) => { const rec = { objective: 'sales', notes: '', ...c, sample: true }; upsert(db.campaigns, rec); ids[key] = rec.id; });
+
+    [
+        ['Video mở hộp sản phẩm', 'tiktok', 'video', -6, 'published', 'tt'], ['Bài viết: 5 cách chọn quà cho khách hàng', 'facebook', 'post', -3, 'published', 'fb'],
+        ['Livestream xả kho cuối tuần', 'facebook', 'livestream', -1, 'published', 'fb'], ['Reels hậu trường đóng gói', 'instagram', 'reel', 0, 'scheduled', null],
+        ['Bản tin email tháng này', 'email', 'email', 2, 'review', 'em'], ['Blog SEO: hướng dẫn sử dụng sản phẩm', 'seo', 'blog', 5, 'drafting', null],
+        ['Story khảo sát ý kiến khách hàng', 'facebook', 'story', 9, 'idea', 'fb'],
+        ['Minigame tặng voucher', 'facebook', 'post', null, 'idea', null], ['Hợp tác KOC địa phương', 'tiktok', 'video', null, 'idea', 'kol'],
+    ].forEach(([title, channel, format, offset, status, camp]) => upsert(db.content, {
+        title, channel, format, status, publish_date: offset == null ? null : addDays(t, offset), campaign_id: camp ? ids[camp] : null,
+        assignee: offset != null && offset % 2 ? 'Lan' : 'Bảo', url: '', notes: '', sample: true,
+    }));
+
+    [
+        ['Chị Hoa', 'Spa Hoa Mộc', 'new', 5e6, 'fb'], ['Anh Minh', '', 'new', 3e6, 'gg'], ['Cô Thảo', 'Trường mầm non Sao Mai', 'contacted', 12e6, 'gg'],
+        ['Anh Tuấn', 'Nhà hàng Bếp Quê', 'contacted', 8e6, 'fb'], ['Chị Ngọc', '', 'qualified', 6.5e6, 'tt'], ['Anh Dũng', 'Cty TNHH Dũng Phát', 'qualified', 25e6, 'gg'],
+        ['Chị Mai', 'Tiệm bánh Mai', 'proposal', 9e6, 'fb'], ['Anh Khoa', 'Gym Khoa Fit', 'won', 15e6, 'gg'], ['Chị Vy', '', 'won', 4.2e6, 'em'], ['Anh Long', 'Garage Long Thành', 'lost', 7e6, 'tt'],
+    ].forEach(([name, company, stage, value, camp], i) => upsert(db.leads, {
+        name, company, stage, value, campaign_id: ids[camp], source: (byId(db.campaigns, ids[camp]) || {}).channel || 'other',
+        phone: '0901 234 5' + pad(10 + i), email: '', assignee: i % 2 ? 'Lan' : 'Bảo', notes: '', sample: true,
+    }));
+
+    const cat = (name, type) => (db.categories.find(c => c.name === name && c.type === type) || db.categories.find(c => c.type === type) || {}).id;
+    let pt = 1, pc = 1;
+    const now = new Date();
+    for (let back = 2; back >= 0; back--) {
+        const base = new Date(now.getFullYear(), now.getMonth() - back, 1);
+        const day = n => ymd(new Date(base.getFullYear(), base.getMonth(), n));
+        [
+            [2, 'expense', 'Thuê văn phòng', 8e6, 0, false, 'bank', 'Thuê văn phòng tháng ' + (base.getMonth() + 1), 'Cty BĐS An Khang', null],
+            [5, 'expense', 'Quảng cáo online (Facebook, Google, TikTok...)', 5e6, 10, false, 'bank', 'Nạp tiền quảng cáo Facebook', 'Meta', 'fb'],
+            [8, 'expense', 'Quảng cáo online (Facebook, Google, TikTok...)', 3e6, 10, false, 'bank', 'Nạp tiền Google Ads', 'Google', 'gg'],
+            [10, 'expense', 'Điện, nước, internet', 1.32e6, 10, true, 'cash', 'Cước internet và điện', 'VNPT', null],
+            [12, 'expense', 'Giá vốn hàng bán', 18e6, 8, false, 'bank', 'Nhập hàng', 'Cty Phân phối Minh Long', null],
+            [15, 'income', 'Doanh thu dịch vụ', 10.8e6, 8, true, 'bank', 'Phí dịch vụ lắp đặt', 'Gym Khoa Fit', null],
+            [18, 'expense', 'Chi phí khác', 350000, 0, false, 'cash', 'Gửi xe, văn phòng phẩm', '', null],
+            [20, 'income', 'Doanh thu bán hàng', [48.4e6, 55e6, 61.6e6][2 - back], 10, true, 'bank', 'Doanh thu bán hàng online', 'Khách lẻ', null],
+            [22, 'income', 'Doanh thu bán hàng', 6.6e6, 10, true, 'cash', 'Bán hàng tại cửa hàng', 'Khách lẻ', null],
+            [26, 'expense', 'Lương, thưởng, bảo hiểm', 25e6, 0, false, 'bank', 'Lương nhân viên tháng ' + (base.getMonth() + 1), '', null],
+        ].forEach(([n, type, catName, amount, rate, incl, method, description, counterparty, camp]) => {
+            const date = day(n);
+            if (date > t) { return; }
+            const s = M.splitVat(amount, rate, incl);
+            upsert(db.transactions, { txn_date: date, type, category_id: cat(catName, type), amount: s.net, vat_rate: rate, vat_amount: s.vat, total: s.total,
+                method, counterparty, doc_no: type === 'income' ? 'PT' + pad(pt++).padStart(3, '0') : 'PC' + pad(pc++).padStart(3, '0'),
+                campaign_id: camp ? ids[camp] : null, description, sample: true });
+        });
+    }
+    if (!db.settings.opening_cash && !db.settings.opening_bank) {
+        db.settings.opening_cash = 20e6; db.settings.opening_bank = 150e6; db.meta.sample_opening = true;
+    }
+    persist();
+}
+
+function clearSample() {
+    const removed = new Set(db.campaigns.filter(c => c.sample).map(c => c.id));
+    COLLECTIONS.forEach(k => { db[k] = db[k].filter(x => !x.sample); });
+    ['content', 'leads', 'transactions'].forEach(k => db[k].forEach(x => { if (removed.has(x.campaign_id)) { x.campaign_id = null; } }));
+    if (db.meta.sample_opening && db.settings.opening_cash === 20e6 && db.settings.opening_bank === 150e6) {
+        db.settings.opening_cash = 0; db.settings.opening_bank = 0;
+    }
+    delete db.meta.sample_opening;
+    persist();
+}
+
+/* ---------------------------------------------------------------- events */
+
+let toastTimer = null;
+function toast(msg) {
+    const el = $('#toast');
+    el.textContent = msg;
+    el.hidden = false;
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => { el.hidden = true; }, 3200);
+}
+
+function setPath(path, value) {
+    const keys = path.split('.');
+    let o = ui;
+    keys.slice(0, -1).forEach(k => { o = o[k]; });
+    o[keys[keys.length - 1]] = value;
+}
+
+const ACTIONS = {
+    add: el => openForm(el.dataset.kind, null, el.dataset.type ? { type: el.dataset.type } : el.dataset.date ? { publish_date: el.dataset.date } : {}),
+    edit: el => openForm(el.dataset.kind, Number(el.dataset.id)),
+    delete: el => {
+        const K = KINDS[el.dataset.kind];
+        if (!confirm('Xóa ' + K.noun + ' này? Không thể hoàn tác.')) { return; }
+        const err = removeRecord(el.dataset.kind, el.dataset.id);
+        if (err) { toast(err); return; }
+        if (dlg.open) { closeDialog(); }
+        toast('Đã xóa ' + K.noun + '.');
+        render();
+    },
+    'close-dialog': () => closeDialog(),
+    export: el => {
+        const w = el.dataset.what;
+        if (w === 'campaigns') { EXPORTS.campaigns(ui.camp.year); }
+        if (w === 'ledger') { EXPORTS.ledger(ui.ledger.from, ui.ledger.to); }
+        if (w === 'ledger-year') { EXPORTS.ledger(ui.reportYear + '-01-01', ui.reportYear + '-12-31'); }
+        if (w === 'journal') { EXPORTS.journal(ui.journal.from, ui.journal.to); }
+    },
+    month: el => { ui.month = el.dataset.to; render(); },
+    period: el => { ui[el.dataset.path].from = el.dataset.from; ui[el.dataset.path].to = el.dataset.to; render(); },
+    'open-month': el => {
+        const [y, m] = el.dataset.month.split('-').map(Number);
+        Object.assign(ui.ledger, { from: el.dataset.month + '-01', to: monthEnd(y, m), type: '', category: '', method: '', campaign: '' });
+        location.hash = '#ledger';
+    },
+    sample: () => {
+        if (!confirm('Thêm dữ liệu mẫu (5 chiến dịch, nội dung, leads và thu chi 3 tháng gần nhất)? Có thể xóa lại ở trang Thiết lập.')) { return; }
+        addSample(); ui.dashYear = thisYear(); ui.camp.year = thisYear();
+        toast('Đã thêm dữ liệu mẫu.'); render();
+    },
+    'clear-sample': () => {
+        if (!confirm('Xóa toàn bộ dữ liệu mẫu? Dữ liệu bạn tự nhập vẫn được giữ.')) { return; }
+        clearSample(); toast('Đã xóa dữ liệu mẫu.'); render();
+    },
+    backup: () => {
+        db.meta.last_backup = nowStamp();
+        persist();
+        download('so-marketing-sao-luu-' + today() + '.json', JSON.stringify(db, null, 2), 'application/json');
+        toast('Đã tải file sao lưu.'); render();
+    },
+    restore: () => $('#restore-file').click(),
+    wipe: () => {
+        if (!confirm('Xóa toàn bộ chiến dịch, nội dung, leads, thu chi và thiết lập? Nên tải file sao lưu trước.')) { return; }
+        if (!confirm('Chắc chắn xóa? Thao tác này không hoàn tác được.')) { return; }
+        db = emptyDb(); seedCategories(db); persist();
+        toast('Đã xóa toàn bộ dữ liệu.'); render();
+    },
+};
+
+document.addEventListener('click', e => {
+    const el = e.target.closest('[data-act]');
+    if (el && ACTIONS[el.dataset.act]) { e.preventDefault(); ACTIONS[el.dataset.act](el); }
+});
+
+let searchTimer = null;
+function applyFilter(el) {
+    const path = el.dataset.filter;
+    let v = el.value;
+    if (/year|Year/.test(path)) { v = Number(v) || thisYear(); }
+    if (/\.(from|to)$/.test(path)) {
+        if (!parseDate(v)) { return; }
+        setPath(path, v);
+        const p = ui[path.split('.')[0]];
+        if (p.from > p.to) { [p.from, p.to] = [p.to, p.from]; }
+    } else {
+        setPath(path, v);
+    }
+    if (path === 'ledger.type' && ui.ledger.category && (byId(db.categories, ui.ledger.category) || {}).type !== v && v) { ui.ledger.category = ''; }
+    render();
+}
+
+document.addEventListener('change', e => {
+    const el = e.target;
+    if (el.dataset.filter && el.dataset.filter !== 'leads.q') { applyFilter(el); return; }
+    if (el.dataset.set) {
+        const [list, key] = el.dataset.set.split(':');
+        const rec = byId(db[list], el.dataset.id);
+        const group = key === 'stage' ? 'stage' : 'content_status';
+        if (rec) { rec[key] = oneOf(group, el.value, rec[key]); rec.updated_at = nowStamp(); persist(); toast('Đã cập nhật: ' + label(group, rec[key]) + '.'); render(); }
+    }
+});
+
+document.addEventListener('input', e => {
+    const el = e.target;
+    if (el.dataset.filter === 'leads.q') { clearTimeout(searchTimer); searchTimer = setTimeout(() => applyFilter(el), 200); return; }
+    const box = el.closest('.calc');
+    if (box) { runCalc(box); }
+});
+
+document.addEventListener('submit', e => {
+    if (e.target.id !== 'setup-form') { return; }
+    e.preventDefault();
+    const res = saveSetup(formValues(e.target));
+    if (!res.ok) { $('#setup-errors').innerHTML = res.errors.map(h).join('<br>'); return; }
+    toast('Đã lưu thiết lập.'); render();
+});
+
+$('#restore-file').addEventListener('change', e => {
+    const file = e.target.files && e.target.files[0];
+    e.target.value = '';
+    if (!file) { return; }
+    const reader = new FileReader();
+    reader.onload = () => {
+        let d = null;
+        try { d = normalize(JSON.parse(String(reader.result))); } catch (err) { d = null; }
+        if (!d) { toast('File không đúng định dạng sao lưu của Sổ Marketing.'); return; }
+        const msg = `File có ${d.campaigns.length} chiến dịch, ${d.content.length} nội dung, ${d.leads.length} lead, ${d.transactions.length} khoản thu chi. Thay toàn bộ dữ liệu hiện tại bằng file này?`;
+        if (!confirm(msg)) { return; }
+        db = d; persist();
+        toast('Đã khôi phục dữ liệu từ file.'); render();
+    };
+    reader.readAsText(file);
+});
+
+/* ---------------------------------------------------------------- render */
+
+function currentPage() {
+    const id = location.hash.replace('#', '');
+    return Object.prototype.hasOwnProperty.call(VIEWS, id) ? id : 'dashboard';
+}
+
+function renderNav(page) {
+    const groups = {};
+    PAGES.forEach(p => { (groups[p.group] ||= []).push(p); });
+    $('#nav').innerHTML = Object.entries(groups).map(([g, list]) => `<div class="nav-group"><span class="nav-label">${h(g)}</span>`
+        + list.map(p => `<a href="#${p.id}"${p.id === page ? ' aria-current="page"' : ''}>${h(p.label)}</a>`).join('') + '</div>').join('');
+}
+
+function render() {
+    const page = currentPage();
+    renderNav(page);
+    const active = document.activeElement;
+    const keepId = active && active.id && $('#app').contains(active) ? active.id : null;
+    const caret = keepId && typeof active.selectionStart === 'number' ? [active.selectionStart, active.selectionEnd] : null;
+    $('#app').innerHTML = VIEWS[page]();
+    $$('.calc').forEach(runCalc);
+    document.title = PAGES.find(p => p.id === page).label + ' | Sổ Marketing';
+    const backup = db.meta.last_backup ? 'Sao lưu gần nhất ' + new Date(db.meta.last_backup).toLocaleDateString('vi-VN') + '.' : 'Chưa có bản sao lưu nào.';
+    $('#foot').innerHTML = `Dữ liệu được lưu trong trình duyệt trên thiết bị này. ${backup} <a href="#setup">Sao lưu dữ liệu</a>`;
+    if (keepId) {
+        const el = document.getElementById(keepId);
+        if (el) { el.focus(); if (caret && el.setSelectionRange) { try { el.setSelectionRange(caret[0], caret[1]); } catch (err) { /* not a text input */ } } }
+    }
+}
+
+window.addEventListener('hashchange', () => {
+    if (dlg.open) { closeDialog(); }
+    render();
+    window.scrollTo(0, 0);
+    $('#app').focus({ preventScroll: true });
+});
+
+render();
+</script>
+</body>
+</html>
